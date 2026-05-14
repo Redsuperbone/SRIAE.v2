@@ -1,6 +1,7 @@
 const API_PORT = '8080';
 const API_PATH = '/api';
 const API_STORAGE_KEY = 'sriae_api_base_url';
+const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '::1']);
 
 function withApiPath(baseUrl) {
   const cleanUrl = baseUrl.replace(/\/+$/, '');
@@ -15,14 +16,22 @@ function getHostForUrl() {
 }
 
 function getDefaultApiBaseUrl() {
-  if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+  if (window.location.protocol !== 'http:' && window.location.protocol !== 'https:') {
+    return withApiPath(`http://localhost:${API_PORT}`);
+  }
+
+  if (LOCAL_HOSTS.has(window.location.hostname)) {
     return withApiPath(`${window.location.protocol}//${getHostForUrl()}:${API_PORT}`);
   }
 
-  return withApiPath(`http://localhost:${API_PORT}`);
+  return `${window.location.origin}${API_PATH}`;
 }
 
 function getConfiguredApiBaseUrl() {
+  if (window.SRIAE_API_BASE_URL) {
+    return withApiPath(window.SRIAE_API_BASE_URL);
+  }
+
   const params = new URLSearchParams(window.location.search);
   const queryValue = params.get('apiBase') || params.get('api');
 

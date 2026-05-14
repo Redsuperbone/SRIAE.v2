@@ -68,6 +68,8 @@ nav ul {
     margin: 0;
     padding: 0;
     min-width: 0;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 nav a {
     text-decoration: none;
@@ -79,6 +81,7 @@ nav a {
     align-items: center;
     gap: 8px;
     transition: 0.3s;
+    white-space: nowrap;
 }
 
 nav a.activo { background: #e8edff; color: var(--primary); }
@@ -214,14 +217,15 @@ nav a:hover:not(.activo) { background: #f8f9fa; }
 /* HERO, STATS Y PANEL (SIN CAMBIOS) */
 .hero { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; position: relative; }
 .hero-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 40px 20px; }
-.hero-texto { max-width: 500px; z-index: 2; }
+.hero-texto { max-width: 500px; z-index: 2; min-width: 0; }
 .shield-icon { width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; }
 .hero-texto h1 { font-size: 38px; margin-bottom: 15px; line-height: 1.2; }
 .hero-texto p { font-size: 18px; opacity: 0.9; }
-.hero-img-container img { width: 550px; border-radius: 10px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+.hero-img-container { min-width: 0; }
+.hero-img-container img { width: min(550px, 100%); border-radius: 10px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
 
 .stats { max-width: 1200px; margin: -40px auto 30px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; padding: 0 20px; position: relative; z-index: 10; }
-.card { background: var(--white); border-radius: 16px; padding: 25px; display: flex; align-items: center; gap: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+.card { background: var(--white); border-radius: 16px; padding: 25px; display: flex; align-items: center; gap: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); min-width: 0; }
 .icon-circle { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
 .card-azul .icon-circle { background: #e8edff; color: var(--primary); }
 .card-naranja .icon-circle { background: #fff4e6; color: #f39c12; }
@@ -356,17 +360,21 @@ details[open] summary i { transform: rotate(180deg); }
         background: var(--white);
         display: flex;
         justify-content: space-around;
-        padding: 10px 0;
+        padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
         border-top: 1px solid #e1e8ed;
-        gap: 0;
+        gap: 2px;
         z-index: 999;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     nav a {
         flex-direction: column;
         font-size: 10px;
-        padding: 5px;
+        padding: 5px 7px;
         gap: 4px;
+        min-width: 62px;
     }
 
     nav a i { font-size: 18px; }
@@ -375,6 +383,7 @@ details[open] summary i { transform: rotate(180deg); }
     .hero-content {
         flex-direction: column;
         text-align: center;
+        padding-top: 28px;
         padding-bottom: 80px;
     }
 
@@ -384,7 +393,7 @@ details[open] summary i { transform: rotate(180deg); }
     }
 
     .hero-texto h1 { font-size: 28px; }
-    .hero-img-container img { width: 100%; }
+    .hero-img-container img { width: 100%; max-height: 280px; object-fit: contain; }
     .shield-icon { margin: 0 auto 20px; margin-top: 10px}
 
     /* Stats: Cambiamos de 3 columnas a 1 sola */
@@ -394,7 +403,9 @@ details[open] summary i { transform: rotate(180deg); }
         gap: 15px;
     }
 
-    .card { padding: 15px; }
+    .card { padding: 15px; align-items: flex-start; }
+    .card-data { min-width: 0; }
+    .trend { flex-wrap: wrap; }
 
     /* Panel de incidentes: Diseño vertical */
     .item-incidente {
@@ -437,16 +448,40 @@ details[open] summary i { transform: rotate(180deg); }
         display: flex;
         flex-direction: column;
     }
+
+    body {
+        padding-bottom: 72px;
+    }
 }
 
 /* Ajuste extra para pantallas muy pequeñas (celulares mini) */
 @media (max-width: 480px) {
     .hero-texto h1 { font-size: 24px; }
+    .logo-box img { height: 38px; }
+    .nav-container { gap: 8px; }
+    .nav-actions { gap: 4px; }
+    .notif-icon, .user-avatar {
+        width: 38px;
+        height: 38px;
+        font-size: 21px;
+    }
     .notif-dropdown {
         position: fixed;
         left: 5%;
         right: 5%;
         width: 90%;
         top: 60px;
+    }
+
+    .panic-button span {
+        display: none;
+    }
+
+    .panic-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        padding: 0;
+        justify-content: center;
     }
 }

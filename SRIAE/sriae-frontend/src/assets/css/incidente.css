@@ -3,6 +3,7 @@
     max-width: 1000px;
     margin: 40px auto;
     padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .form-card {
@@ -111,6 +112,8 @@
     background: #fcfdfe;
     font-size: 15px;
     outline: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 textarea { height: 120px; resize: none; }
@@ -149,6 +152,7 @@ textarea { height: 120px; resize: none; }
     border-radius: 15px;
     padding: 20px;
     background: #fcfdfe;
+    gap: 14px;
 }
 
 .medical-preview {
@@ -225,11 +229,13 @@ textarea { height: 120px; resize: none; }
     display: flex;
     align-items: center;
     gap: 15px;
+    min-width: 0;
 }
 
 .mini-text {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .mini-text small { color: #64748b; font-size: 12px; }
@@ -549,6 +555,8 @@ textarea { height: 120px; resize: none; }
     font-size: 1rem;
     background: #f8fafc;
     transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .custom-select:focus, textarea:focus {
@@ -653,7 +661,7 @@ textarea {
     .custom-select, 
     textarea, 
     .pill-display-input {
-        width: 90%;
+        width: 100%;
         font-size: 16px; /* Evita zoom automático en iOS */
     }
 
@@ -785,5 +793,37 @@ textarea {
     
     .section-divider h2 {
         font-size: 14px;
+    }
+}
+
+@media (max-width: 520px) {
+    .form-card {
+        padding: 22px 16px;
+    }
+
+    .form-header {
+        gap: 12px;
+    }
+
+    .btn-back {
+        flex: 0 0 42px;
+    }
+
+    .header-title h1 {
+        overflow-wrap: anywhere;
+    }
+
+    .section-divider {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .section-divider h2 {
+        margin: 6px 0 0;
+        line-height: 1.25;
+    }
+
+    .info-banner-blue {
+        align-items: flex-start;
     }
 }

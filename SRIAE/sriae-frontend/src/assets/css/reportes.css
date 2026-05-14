@@ -10,6 +10,7 @@ body {
     font-family: 'Inter', sans-serif;
     margin: 0;
     color: var(--text-dark);
+    overflow-x: hidden;
 }
 
 .container-reportes {
@@ -67,6 +68,7 @@ body {
     margin-bottom: 25px;
     border-bottom: 1px solid #f0f3f8;
     padding-bottom: 18px;
+    flex-wrap: wrap;
 }
 
 .tab-btn {
@@ -143,6 +145,7 @@ body {
 .main-table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 760px;
 }
 
 .main-table thead {
@@ -256,10 +259,31 @@ body {
 
     /* Cards: Menos padding para ganar espacio */
     .card {
-        width: 90%;
+        width: 100%;
         padding: 15px;
         border-radius: 12px;
         margin-bottom: 15px;
+    }
+
+    .header-section {
+        align-items: flex-start;
+    }
+
+    .filter-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 12px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-btn {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+
+    .filter-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
     }
 
     /* Gráficas: Reducimos la altura para que no ocupen toda la pantalla */
@@ -280,7 +304,7 @@ body {
     }
 
     .main-table {
-        min-width: 600px; /* Asegura que la tabla no se colapse */
+        min-width: 680px; /* Asegura que la tabla no se colapse */
     }
 
     .main-table th, .main-table td {

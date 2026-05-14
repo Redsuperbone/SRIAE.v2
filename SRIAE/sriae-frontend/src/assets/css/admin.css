@@ -15,6 +15,7 @@ body {
   color: var(--text-dark);
   font-family: 'Inter', Arial, sans-serif;
   margin: 0;
+  overflow-x: hidden;
 }
 
 .admin-shell {
@@ -62,6 +63,7 @@ body {
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
   padding: 22px;
+  min-width: 0;
 }
 
 .admin-card h2,
@@ -135,6 +137,7 @@ body {
   gap: 8px;
   text-decoration: none;
   font-size: 14px;
+  justify-content: center;
 }
 
 .btn-primary-admin {
@@ -303,5 +306,42 @@ body {
   }
   .form-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .admin-shell {
+    margin: 20px auto 96px;
+    padding: 0 14px;
+  }
+
+  .admin-title h1 {
+    font-size: 23px;
+  }
+
+  .admin-card {
+    padding: 18px 14px;
+    border-radius: 12px;
+  }
+
+  .admin-actions,
+  .btn-row,
+  .inline-actions {
+    width: 100%;
+  }
+
+  .btn-admin,
+  .admin-actions a,
+  .admin-actions button,
+  .btn-row button {
+    width: 100%;
+  }
+
+  .admin-table {
+    min-width: 640px;
+  }
+
+  .kpi-card strong {
+    font-size: 24px;
   }
 }

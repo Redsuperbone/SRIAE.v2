@@ -277,3 +277,85 @@
 .login-footer-info a:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 900px) {
+    .main-registro {
+        padding: 24px 16px 80px;
+    }
+
+    .registro-card {
+        flex-direction: column;
+        max-width: 620px;
+        border-radius: 18px;
+    }
+
+    .sidebar-azul,
+    .form-container {
+        width: 100%;
+    }
+
+    .sidebar-azul {
+        padding: 28px 24px;
+        gap: 18px;
+    }
+
+    .ilustracion {
+        display: none;
+    }
+
+    .form-container {
+        padding: 34px 24px;
+    }
+
+    .input-group input {
+        width: 100%;
+    }
+
+    .features-footer {
+        max-width: 620px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 560px) {
+    .main-registro {
+        padding: 0;
+        background: white;
+    }
+
+    .registro-card {
+        min-height: 100svh;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .sidebar-azul {
+        padding: 24px 18px;
+    }
+
+    .form-container {
+        padding: 28px 18px 36px;
+    }
+
+    .form-container h1 {
+        font-size: 25px;
+    }
+
+    .role-selector {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .selector-box,
+    .login-footer-info,
+    .feature-item {
+        align-items: flex-start;
+    }
+
+    .features-footer {
+        padding: 0 16px 28px;
+    }
+}
