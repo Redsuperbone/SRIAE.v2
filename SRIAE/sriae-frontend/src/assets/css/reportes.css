@@ -1,0 +1,371 @@
+:root {
+    --bg-main: #f5f7fb;
+    --navy-blue: #11429f; /* Color exacto de la cabecera en la imagen */
+    --text-dark: #0a1b3d;
+    --border-gray: #e5e9f2;
+}
+
+body {
+    background-color: var(--bg-main);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    color: var(--text-dark);
+}
+
+.container-reportes {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.header-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.btn-back {
+    background: white;
+    border: 1px solid var(--border-gray);
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.main-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Cards Generales */
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+/* Buscador */
+.search-header {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #f0f3f8;
+    padding-bottom: 18px;
+}
+
+.tab-btn {
+    background: white;
+    border: 1px solid var(--border-gray);
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #64748b;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-btn.active {
+    background: var(--navy-blue);
+    color: white;
+    border-color: var(--navy-blue);
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 25px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.input-group select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border-gray);
+    background: #f9fbff;
+    color: #1e293b;
+    outline: none;
+}
+
+.status-legend {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    margin-top: 10px;
+}
+.status-legend i { font-size: 8px; }
+.red { color: #ef4444; }
+.orange { color: #f59e0b; }
+.green { color: #10b981; }
+
+/* Gráficas */
+.charts-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.canvas-holder { height: 240px; position: relative; }
+
+/* Tabla */
+.table-container {
+    padding: 0;
+    overflow: hidden;
+}
+
+.main-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.main-table thead {
+    background-color: var(--navy-blue);
+    color: white;
+}
+
+.main-table th {
+    padding: 16px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.main-table th i { margin-right: 8px; opacity: 0.9; }
+
+.main-table td {
+    padding: 18px 16px;
+    border-bottom: 1px solid #f0f3f8;
+    font-size: 14px;
+}
+
+.report-photo-thumb {
+    width: 74px;
+    height: 52px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid #e5e9f2;
+    display: block;
+}
+
+.muted-cell {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* Badges de Gravedad */
+.badge-status {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.badge-status i { font-size: 7px; }
+.bg-red { background: #fee2e2; color: #dc2626; }
+.bg-orange { background: #fef3c7; color: #d97706; }
+.bg-green { background: #d1fae5; color: #059669; }
+
+.action-pdf {
+    color: var(--navy-blue);
+    text-decoration: none;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Footer Note */
+.footer-note {
+    background: #e9efff;
+    padding: 18px 24px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #d1dfff;
+}
+
+.note-content {
+    color: #1e40af;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.note-content i { font-size: 18px; }
+
+.btn-export-blue {
+    background: transparent;
+    border: 1.5px solid var(--navy-blue);
+    color: var(--navy-blue);
+    padding: 10px 22px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-export-blue:hover {
+    background: var(--navy-blue);
+    color: white;
+}/* ==========================================
+   AJUSTES RESPONSIVOS OPTIMIZADOS
+   ========================================== */
+
+@media (max-width: 768px) {
+    .container-reportes {
+        margin: 15px auto;
+        padding: 0 10px; /* Menos espacio a los lados */
+    }
+
+    .main-title {
+        font-size: 1.3rem; /* Título más pequeño */
+        text-align: center;
+    }
+
+    /* Cards: Menos padding para ganar espacio */
+    .card {
+        width: 90%;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+    }
+
+    /* Gráficas: Reducimos la altura para que no ocupen toda la pantalla */
+    .canvas-holder {
+        height: 200px !important; 
+    }
+
+    .charts-layout {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Tabla: Forzamos el scroll horizontal y bajamos el tamaño de letra */
+    .table-container {
+        overflow-x: auto;
+        display: block;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .main-table {
+        min-width: 600px; /* Asegura que la tabla no se colapse */
+    }
+
+    .main-table th, .main-table td {
+        padding: 10px 8px;
+        font-size: 12px; /* Letra más compacta */
+    }
+
+    /* Badges más pequeños */
+    .badge-status {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+
+    /* Footer / Nota informativa */
+    .footer-note {
+        flex-direction: column;
+        padding: 15px;
+        gap: 12px;
+    }
+
+    .note-content {
+        font-size: 12px;
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .btn-export-blue {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+    /* Forzamos que el contenido de la card se apile verticalmente */
+    .chart-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centra el título y la gráfica */
+        padding: 15px 10px;  /* Padding más ajustado */
+    }
+
+    .chart-box h3 {
+        font-size: 15px;
+        margin-top: 0;
+        margin-bottom: 15px; /* Espacio entre título y gráfica */
+        width: 100%;
+        text-align: center;
+        color: var(--navy-blue);
+        font-weight: 700;
+    }
+
+    /* Contenedor de la gráfica */
+    .canvas-holder {
+        width: 100% !important; /* Que use todo el ancho disponible */
+        height: 220px !important; /* Altura ideal para ver detalles sin exagerar */
+        position: relative;
+    }
+
+    /* Reducimos el espacio entre las dos cards de gráficas */
+    .charts-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+/* Ajuste extra para celulares muy pequeños */
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 1.1rem;
+    }
+    
+    .canvas-holder {
+        height: 180px !important;
+    }
+}
+
+/* Añade un espacio al final del contenedor principal */
+.container-reportes {
+    padding-bottom: 80px !important; /* Ajusta este valor según el alto de tu navbar */
+}
+
+/* En móviles, como el navbar suele ser más alto o el botón de exportar ocupa espacio, 
+   podemos aumentarlo un poco más */
+@media (max-width: 768px) {
+    .container-reportes {
+        padding-bottom: 120px !important;
+    }
+}

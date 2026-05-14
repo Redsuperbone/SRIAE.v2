@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRIAE - Registrar Incidente</title>
+    <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="stylesheet" href="../assets/css/incidente.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="../assets/images/icono.png" type="image/png">
+</head>
+<body>
+
+<nav>
+    <div class="nav-container">
+        <div class="logo-box">
+            <img src="../assets/images/logo.png" alt="Logo">
+            <div class="logo-texto">
+                <span class="siglas">SRIAE</span>
+                <span class="subtitulo">Sistema de Incidentes y Alertas Escolares</span>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="estudiante.html"><i class="far fa-user"></i> Estudiante</a></li>
+            <li><a class="activo" href="#"><i class="fas fa-exclamation-triangle"></i> Incidente</a></li>
+            <li><a href="protocolos.html"><i class="far fa-file-alt"></i> Protocolos</a></li>
+            <li><a href="reportes.html"><i class="fas fa-chart-bar"></i> Reportes</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <div class="notifications-container">
+                <div class="notif-icon" id="notifBtn">
+                    <i class="far fa-bell"></i>
+                    <span class="badge"></span>
+                </div>
+                <div class="dropdown-menu notif-dropdown" id="notifDropdown">
+                    <div class="notif-header">Notificaciones</div>
+                    <div class="notif-items">
+                        <a href="#" class="notif-item unread">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div class="notif-text">
+                                <p><strong>Nuevo Incidente:</strong> Juan Pérez - Incendio</p>
+                                <span>Hace 2 min</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        
+                    </div>
+                    <a href="#" class="view-all">Ver todas las alertas</a>
+                </div>
+            </div>
+
+            <div class="user-menu-container">
+                <div class="user-avatar" id="userBtn">
+                    <i class="far fa-user-circle"></i>
+                </div>
+                <div class="dropdown-menu" id="userDropdown">
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+                    <a href="registro.html"><i class="fas fa-user-plus"></i> Crear Cuenta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="container-registro">
+    <div class="form-card">
+        <header class="form-header">
+            <div class="header-title">
+                <h1>Registrar incidente</h1>
+                <p>Completa la información para registrar un nuevo incidente.</p>
+            </div>
+        </header>
+
+        <section class="date-time-row">
+
+            <script>
+                window.onload = function() {
+                const ahora = new Date();
+
+                // Obtener fecha en formato YYYY-MM-DD
+                const anio = ahora.getFullYear();
+                const mes = String(ahora.getMonth() + 1).padStart(2, '0');
+                const dia = String(ahora.getDate()).padStart(2, '0');
+                document.getElementById('fecha-incidente').value = `${anio}-${mes}-${dia}`;
+
+                // Obtener hora en formato HH:MM
+                const horas = String(ahora.getHours()).padStart(2, '0');
+                const minutos = String(ahora.getMinutes()).padStart(2, '0');
+                document.getElementById('hora-incidente').value = `${horas}:${minutos}`;
+
+                const inputFecha = document.getElementById('fecha-incidente');
+
+                inputFecha.addEventListener('blur', function() {
+                    const año = new Date(this.value).getFullYear();
+                    if (año < 2000 || año > 2100) {
+                        const hoy = new Date().toISOString().split('T')[0];
+                        this.value = hoy;
+                    }
+                });
+            };
+            </script>
+
+            <div class="input-info">
+                <label><i class="far fa-calendar-alt"></i> Fecha del incidente</label>
+                <!-- Cambiamos el div por un input date -->
+                <input type="date" id="fecha-incidente" class="pill-display-input" min="2000-01-01" max="2100-12-31">
+            </div>
+            <div class="input-info">
+                <label><i class="far fa-clock"></i> Hora del incidente</label>
+                <!-- Cambiamos el div por un input time -->
+                <input type="time" id="hora-incidente" class="pill-display-input">
+            </div>
+        </section>
+
+        <section class="form-section">
+            <div class="section-divider">
+                <div class="icon-circle-small"><i class="far fa-file-alt"></i></div>
+                <h2>DATOS DEL INCIDENTE</h2>
+                <hr>
+            </div>
+
+            <div class="grid-form">
+
+                <div class="col">
+                    <div class="field-group">
+
+                        <label>Tipo de incidente</label>
+                        <select class="custom-select" id="tipo-incidente" onchange="sugerirGravedad()">
+                            <option value="" disabled selected>Selecciona un tipo...</option>
+                            
+                            <optgroup label="Salud y Malestares">
+                                <option value="dolor_cabeza">Dolor de cabeza</option>
+                                <option value="dolor_estomago">Dolor de estómago</option>
+                                <option value="vomito">Náuseas / Vómito</option>
+                                <option value="fiebre">Fiebre</option>
+                                <option value="sangrado_nasal">Sangrado nasal</option>
+                                <option value="alergia_leve">Reacción alérgica leve</option>
+                            </optgroup>
+
+                            <optgroup label="Lesiones Físicas">
+                                <option value="raspon">Raspón / Escoriación</option>
+                                <option value="moreton">Moretón / Contusión</option>
+                                <option value="caida">Caída</option>
+                                <option value="esguince">Torcedura / Esguince</option>
+                                <option value="cortada_leve">Cortada superficial</option>
+                                <option value="golpe_cabeza">Golpe en la cabeza</option>
+                            </optgroup>
+
+                            <optgroup label="Emergencias Graves">
+                                <option value="fractura">Fractura</option>
+                                <option value="hemorragia">Hemorragia severa</option>
+                                <option value="asfixia">Atragantamiento / Asfixia</option>
+                                <option value="convulsion">Crisis convulsiva</option>
+                                <option value="desmayo">Pérdida del conocimiento</option>
+                                <option value="quemadura">Quemadura</option>
+                                <option value="dificultad_respiratoria">Dificultad respiratoria</option>
+                            </optgroup>
+
+                            <optgroup label="Otros">
+                                <option value="otro">Otro (especificar en descripción)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    
+                    <div class="field-group">
+                        <label>Gravedad</label>
+                        <select class="custom-select" id="select-gravedad" onchange="actualizarGravedad()">
+                            <option value="alta">🔴 Gravedad Alta</option>
+                            <option value="media">🟠 Gravedad Media</option>
+                            <option value="baja">🟢 Gravedad Baja</option>
+                            <option value="preventiva">🔵 Gravedad Preventiva</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="field-group">
+                        <label>Descripción del incidente</label>
+                        <textarea placeholder="Describe qué ocurrió..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cuadro de Alerta Dinámico -->
+            <div id="alerta-container" class="alert-box-dinamica gravedad-alta">
+                <i id="alerta-icono" class="fas fa-exclamation-circle"></i>
+                <div class="alert-content">
+                    <strong id="alerta-titulo">Gravedad Alta (Crítica / Emergencia)</strong>
+                    <p id="alerta-descripcion">Se trata de incidentes que representan un riesgo inmediato para la vida o pueden dejar secuelas graves si no se atienden rápidamente.</p>
+                </div>
+            </div>
+
+            <div class="grid-form mt-20">
+                <div class="field-group">
+                    <label>Lugar / Área</label>
+                    <select class="custom-select" id="lugar-incidente" required>
+                        <option value="" disabled selected>Selecciona el lugar...</option>
+                        <option value="Patio">Patio / Canchas</option>
+                        <option value="Salon">Salón de clases</option>
+                        <option value="Baños">Baños</option>
+                        <option value="Pasillos">Pasillos / Escaleras</option>
+                        <option value="Cooperativa">Cooperativa / Cafetería</option>
+                        <option value="Entrada">Entrada / Salida</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label>Fotos (opcional)</label>
+                    <div class="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span class="upload-link">Subir fotos</span>
+                        <p>Arrastra y suelta archivos aquí o haz clic para seleccionar</p>
+                        <small>Formatos: JPG, PNG (Max. 5 MB)</small>
+                        <input type="file" id="foto-incidente" accept="image/png,image/jpeg" hidden>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="form-section mt-40">
+            <div class="section-divider">
+                <div class="icon-circle-small"><i class="far fa-user"></i></div>
+                <h2>DATOS DEL ALUMNO</h2>
+                <hr>
+            </div>
+
+            <div class="search-student">
+                <i class="fas fa-search"></i>
+                <input type="text" id="buscar-estudiante" placeholder="Buscar por nombre, matricula, grado o grupo...">
+            </div>
+            <p class="student-search-status" id="studentSearchStatus">Cargando alumnos...</p>
+
+            <div class="student-mini-card">
+                <!-- Grado -->
+                <div class="mini-info">
+                    <div class="icon-blue"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="mini-text">
+                        <small>Grado</small>
+                        <select class="select-invisible" id="select-grado" onchange="cargarAlumnos()">
+                            <option value="">Grado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Grupo -->
+                <div class="mini-info">
+                    <div class="icon-blue"><i class="fas fa-users"></i></div>
+                    <div class="mini-text">
+                        <small>Grupo</small>
+                        <select class="select-invisible" id="select-grupo" onchange="cargarAlumnos()">
+                            <option value="">Grupo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Alumno -->
+                <div class="mini-info">
+                    <div class="icon-blue"><i class="fas fa-user"></i></div>
+                    <div class="mini-text">
+                        <small>Alumno</small>
+                        <select class="select-invisible" id="select-alumno">
+                            <option value="">Cargando alumnos...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="medical-preview" id="medicalPreview">
+                <div class="medical-preview-header">
+                    <div>
+                        <h3>Registro medico del alumno</h3>
+                        <p id="medicalPreviewStatus">Selecciona un alumno para consultar su informacion medica.</p>
+                    </div>
+                    <span class="medical-badge" id="medicalBloodType">N/D</span>
+                </div>
+                <div class="medical-grid" id="medicalPreviewGrid">
+                    <div class="medical-item">
+                        <small>Alergias</small>
+                        <strong>Sin alumno seleccionado</strong>
+                    </div>
+                    <div class="medical-item">
+                        <small>Enfermedades cronicas</small>
+                        <strong>Sin alumno seleccionado</strong>
+                    </div>
+                    <div class="medical-item">
+                        <small>Medicamentos</small>
+                        <strong>Sin alumno seleccionado</strong>
+                    </div>
+                    <div class="medical-item">
+                        <small>Observaciones</small>
+                        <strong>Sin alumno seleccionado</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="info-banner-blue">
+            <i class="fas fa-info-circle"></i>
+            <span>Al hacer clic en registrar se mostrará la información y un botón de confirmar.</span>
+        </div>
+
+
+        <button type="button" class="btn-submit-full" onclick="abrirConfirmacion()">
+            <i class="far fa-save"></i> Registrar incidente
+        </button>
+                
+    </div>
+</main>
+
+<script>
+
+    function abrirConfirmacion() {
+        
+        const selectIncidente = document.getElementById('tipo-incidente');
+            const selectAlumno = document.getElementById('select-alumno');
+
+            // Validación: Si el valor es vacío, mandamos una alerta y detenemos la función
+            if (selectIncidente.value === "" || selectAlumno.value === "") {
+                alert("Por favor, selecciona el tipo de incidente y el alumno antes de continuar.");
+                return; // Esto evita que el modal se abra
+            }
+
+        const alumno = document.getElementById('select-alumno').options[document.getElementById('select-alumno').selectedIndex].text;
+        const incidente = document.getElementById('tipo-incidente').options[document.getElementById('tipo-incidente').selectedIndex].text;
+        const gravedad = document.getElementById('select-gravedad').value;
+        const fecha = document.getElementById('fecha-incidente').value;
+        const hora = document.getElementById('hora-incidente').value;
+        const lugar = document.getElementById('lugar-incidente').value;
+
+        // 2. Llenar el resumen del modal
+        document.getElementById('res-alumno').innerText = alumno;
+        document.getElementById('res-incidente').innerText = incidente;
+        document.getElementById('res-fechahora').innerText = `${fecha} a las ${hora}`;
+        document.getElementById('res-lugar').innerText = lugar || "No especificado";
+
+        const resGravedad = document.getElementById('res-gravedad');
+        resGravedad.innerText = gravedad.toUpperCase();
+
+        // 3. Aplicar color dinámico al modal
+        const modal = document.getElementById('modal-card');
+        modal.className = "modal-content modal-" + gravedad; // Ej: modal-content modal-alta
+
+        // 4. Mostrar modal
+        document.getElementById('modal-confirmacion').style.display = 'flex';
+    }
+
+    function cerrarModal() {
+        document.getElementById('modal-confirmacion').style.display = 'none';
+    }
+
+    function enviarFormulario() {
+    // Cerramos el modal de confirmación primero
+    cerrarModal();
+
+    // Simulamos respuesta del servidor (Success = true)
+    let registroExitoso = true ; 
+
+    const overlay = document.getElementById('overlay-notificacion');
+    const iconoContainer = document.getElementById('icono-notif-container');
+    const icono = document.getElementById('notif-icono');
+    const titulo = document.getElementById('notif-titulo');
+    const mensaje = document.getElementById('notif-mensaje');
+
+    if (registroExitoso) {
+        iconoContainer.className = "notif-icon-circle notif-success";
+        icono.className = "fas fa-check"; // La palomita
+        titulo.innerText = "¡Registro Exitoso!";
+        mensaje.innerText = "El incidente ha sido guardado correctamente en el sistema.";
+        vaciarCampos(); // Limpiamos todo
+    } else {
+        iconoContainer.className = "notif-icon-circle notif-error";
+        icono.className = "fas fa-times"; // La tacha
+        titulo.innerText = "¡Error al Registrar!";
+        mensaje.innerText = "El incidente no pudo registrarse, comprueba tu conexión a internet.";
+    }
+
+    overlay.style.display = 'flex';
+    setTimeout(() => overlay.classList.add('active'), 10);
+}
+
+function vaciarCampos() {
+    // Reiniciamos los selectores principales
+    document.getElementById('lugar-incidente').value = "";
+    document.getElementById('tipo-incidente').value = "";
+    document.getElementById('select-gravedad').value = "alta"; // O tu valor por defecto
+    document.querySelector('textarea').value = "";
+    
+    // Reiniciar datos del alumno (Volver al estado inicial)
+    document.getElementById('select-grado').selectedIndex = 0;
+    document.getElementById('select-grupo').selectedIndex = 0;
+    document.getElementById('select-alumno').innerHTML = '<option value="" disabled selected>Primero elige grado y grupo</option>';
+    window.limpiarHistorialMedico?.();
+    
+    // Actualizar el cuadro de alerta visual al estado inicial
+    actualizarGravedad(); 
+    
+    // Actualizar fecha y hora a la actual de nuevo
+    establecerFechaHoraActual(); 
+}
+
+function finalizarTodo() {
+    const overlay = document.getElementById('overlay-notificacion');
+    overlay.classList.remove('active');
+    setTimeout(() => overlay.style.display = 'none', 300);
+}
+
+// Función extraída para reutilizar al cargar y al limpiar
+function establecerFechaHoraActual() {
+    const ahora = new Date();
+    const anio = ahora.getFullYear();
+    const mes = String(ahora.getMonth() + 1).padStart(2, '0');
+    const dia = String(ahora.getDate()).padStart(2, '0');
+    document.getElementById('fecha-incidente').value = `${anio}-${mes}-${dia}`;
+
+    const horas = String(ahora.getHours()).padStart(2, '0');
+    const minutos = String(ahora.getMinutes()).padStart(2, '0');
+    document.getElementById('hora-incidente').value = `${horas}:${minutos}`;
+}
+
+    function cargarAlumnos() {
+    const grado = document.getElementById('select-grado').value;
+    const grupo = document.getElementById('select-grupo').value;
+    const selectAlumno = document.getElementById('select-alumno');
+
+    // Solo disparamos la búsqueda si ambos campos tienen valor
+    if (grado && grupo) {
+        selectAlumno.innerHTML = '<option value="">Cargando alumnos...</option>';
+
+        // Aquí es donde harías tu fetch al backend, algo como:
+        /*
+        fetch(`tu_api/alumnos?grado=${grado}&grupo=${grupo}`)
+            .then(response => response.json())
+            .then(data => {
+                selectAlumno.innerHTML = '<option value="" disabled selected>Selecciona un alumno</option>';
+                data.forEach(alumno => {
+                    let option = document.createElement('option');
+                    option.value = alumno.id;
+                    option.text = alumno.nombre_completo;
+                    selectAlumno.add(option);
+                });
+            });
+        */
+        
+        // Simulación temporal para que veas cómo se vería:
+        console.log(`Buscando alumnos de ${grado}° ${grupo}...`);
+    }
+}
+    function sugerirGravedad() {
+    const incidente = document.getElementById('tipo-incidente').value;
+    const selectGravedad = document.getElementById('select-gravedad');
+
+    // Definimos qué gravedad corresponde a cada valor del select
+    const mapeoGravedad = {
+        // Alta
+        'fractura': 'alta',
+        'hemorragia': 'alta',
+        'asfixia': 'alta',
+        'convulsion': 'alta',
+        'desmayo': 'alta',
+        'quemadura': 'alta',
+        'dificultad_respiratoria': 'alta',
+        
+        // Media
+        'vomito': 'media',
+        'fiebre': 'media',
+        'esguince': 'media',
+        'golpe_cabeza': 'media',
+        'alergia_leve': 'media',
+        
+        // Baja
+        'dolor_cabeza': 'baja',
+        'dolor_estomago': 'baja',
+        'sangrado_nasal': 'baja',
+        'raspon': 'baja',
+        'moreton': 'baja',
+        'caida': 'baja',
+        'cortada_leve': 'baja'
+    };
+
+    if (mapeoGravedad[incidente]) {
+        // Cambiamos el valor del select de gravedad
+        selectGravedad.value = mapeoGravedad[incidente];
+        
+        // Ejecutamos tu función original para que se actualice el cuadro de alerta visual
+        actualizarGravedad();
+    }
+}
+
+    function actualizarGravedad() {
+        const tipo = document.getElementById('select-gravedad').value;
+        const contenedor = document.getElementById('alerta-container');
+        const titulo = document.getElementById('alerta-titulo');
+        const desc = document.getElementById('alerta-descripcion');
+        const icono = document.getElementById('alerta-icono');
+
+        const contenidos = {
+            alta: {
+                titulo: "Gravedad Alta (Crítica / Emergencia)",
+                desc: "Riesgo inmediato para la vida. Requiere atención médica urgente o traslado. Ej: Pérdida de conciencia, fractura expuesta o asfixia.",
+                clase: "gravedad-alta",
+                icono: "fa-exclamation-circle"
+            },
+            media: {
+                titulo: "Gravedad Media (Moderada)",
+                desc: "Requiere atención médica pero no representa peligro inmediato. Ej: Esguinces, cortadas que necesitan sutura o fiebre alta.",
+                clase: "gravedad-media",
+                icono: "fa-exclamation-triangle"
+            },
+            baja: {
+                titulo: "Gravedad Baja (Leve)",
+                desc: "Se resuelve con primeros auxilios básicos. El estudiante puede continuar sus actividades. Ej: Raspones o golpes leves.",
+                clase: "gravedad-baja",
+                icono: "fa-check-circle"
+            },
+            preventiva: {
+                titulo: "Gravedad Preventiva / Observación",
+                desc: "No hay lesión evidente. Se registra para seguimiento si el problema empeora. Ej: Mareo momentáneo o queja de dolor leve.",
+                clase: "gravedad-preventiva",
+                icono: "fa-info-circle"
+            }
+        };
+
+        const data = contenidos[tipo];
+        contenedor.className = "alert-box-dinamica " + data.clase;
+        titulo.innerText = data.titulo;
+        desc.innerText = data.desc;
+        icono.className = "fas " + data.icono;
+    }
+</script>
+
+<!-- Estructura del Modal -->
+<div id="modal-confirmacion" class="modal-overlay">
+    <div id="modal-card" class="modal-content">
+        <div class="modal-header">
+            <i id="modal-icono" class="fas fa-exclamation-triangle"></i>
+            <h2>Confirmar Registro</h2>
+        </div>
+        <div class="modal-body">
+            <p>Por favor, revisa que la información sea correcta antes de finalizar:</p>
+            <ul class="resumen-lista">
+                <li><strong>Alumno:</strong> <span id="res-alumno"></span></li>
+                <li><strong>Incidente:</strong> <span id="res-incidente"></span></li>
+                <li><strong>Gravedad:</strong> <span id="res-gravedad" class="badge-gravedad"></span></li>
+                <li><strong>Fecha y Hora:</strong> <span id="res-fechahora"></span></li>
+                <li><strong>Lugar:</strong> <span id="res-lugar"></span></li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancelar" onclick="cerrarModal()">Corregir</button>
+            <button class="btn-confirmar" onclick="enviarFormulario()">Confirmar y Registrar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Contenedor de la notificación -->
+<div id="overlay-notificacion" class="notif-overlay">
+    <div id="card-notificacion" class="notif-card">
+        <div id="icono-notif-container" class="notif-icon-circle">
+            <i id="notif-icono" class="fas"></i>
+        </div>
+        <h2 id="notif-titulo"></h2>
+        <p id="notif-mensaje"></p>
+        <div id="tutorContactActions" class="tutor-contact-actions"></div>
+        <button class="btn-notif-cerrar" onclick="finalizarTodo()">Aceptar</button>
+    </div>
+</div>
+
+<script>
+    
+    const userBtn = document.getElementById('userBtn');
+    const userDropdown = document.getElementById('userDropdown');
+    const notifBtn = document.getElementById('notifBtn');
+    const notifDropdown = document.getElementById('notifDropdown');
+
+    // Menú Usuario
+    userBtn.addEventListener('click', (e) => {
+        userDropdown.classList.toggle('show');
+        notifDropdown.classList.remove('show');
+        e.stopPropagation();
+    });
+
+    // Menú Notificaciones
+    notifBtn.addEventListener('click', (e) => {
+        notifDropdown.classList.toggle('show');
+        userDropdown.classList.remove('show');
+        e.stopPropagation();
+    });
+
+    // Cerrar todo al hacer clic fuera
+    window.addEventListener('click', (e) => {
+        if (!userBtn.contains(e.target)) userDropdown.classList.remove('show');
+        if (!notifBtn.contains(e.target)) notifDropdown.classList.remove('show');
+    });
+</script>
+<script type="module" src="scripts/sessionGuard.js"></script>
+<script type="module" src="scripts/incidente.js?v=20260514-2"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+
+        /* Estilos básicos para limpiar el diseño */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        /* Contenedor del menú */
+        nav {
+            background-color: white;
+            border-radius: 0px;
+        }
+
+        /* Convertimos la lista en un contenedor Flex */
+        nav ul {
+            list-style-type: none; /* Quitamos los puntos de la lista */
+            margin: 0;
+            padding: 0;
+            display: flex; 
+            justify-content: center; /* Centra los elementos */
+        }
+
+        /* Estilo para los elementos de la lista */
+        nav li {
+            padding: 0;
+        }
+
+        /* Estilo para los enlaces */
+        nav a {
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        /* Efecto al pasar el mouse */
+        nav a:hover {
+            background-color: #8898ff;
+            color: black;
+        }

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRIAE - Gestionar Tutor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/actualizar.css">
+    <style>
+        .contact-card {
+            border: 1.5px solid var(--border-gray);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9fbff;
+        }
+        .contact-info h4 { margin: 0; font-size: 1rem; color: var(--navy-blue); }
+        .contact-info p { margin: 3px 0 0; font-size: 0.85rem; color: #64748b; }
+        .btn-whatsapp { color: #25d366; font-size: 1.2rem; margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <main class="container-actualizar">
+        <div class="top-navigation">
+            <a href="estudiante.html" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <span>Volver a Perfil</span>
+        </div>
+
+        <header class="profile-header">
+            <div class="header-info">
+                <h1>Gestion de Tutores</h1>
+                <p class="student-name">Selecciona un alumno</p>
+                <p class="student-id">La informacion se carga desde el backend</p>
+            </div>
+        </header>
+
+        <section class="card-form" style="margin-bottom: 20px;">
+            <div class="section-title">
+                <div class="icon-circle"><i class="fas fa-user-graduate"></i></div>
+                <h2>Alumno</h2>
+            </div>
+
+            <div class="input-group">
+                <label>Alumno</label>
+                <select id="studentSelect">
+                    <option value="">Cargando alumnos...</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="card-form" style="margin-bottom: 20px;">
+            <div class="section-title">
+                <div class="icon-circle"><i class="fas fa-user-tie"></i></div>
+                <h2>Vincular Tutor</h2>
+            </div>
+
+            <div class="input-group">
+                <label>Tutor</label>
+                <select id="tutorSelect">
+                    <option value="">Cargando tutores...</option>
+                </select>
+            </div>
+
+            <button type="button" class="btn-add-more" id="linkTutorBtn">
+                <i class="fas fa-link"></i> Vincular tutor seleccionado
+            </button>
+        </section>
+
+        <section class="card-form">
+            <div class="section-title">
+                <div class="icon-circle"><i class="fas fa-phone-alt"></i></div>
+                <h2>Tutores Vinculados</h2>
+            </div>
+
+            <div id="tutoresList">
+                <p>Cargando tutores del backend...</p>
+            </div>
+        </section>
+    </main>
+
+<script type="module" src="scripts/sessionGuard.js"></script>
+<script type="module" src="scripts/gestionarTutor.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta - SRIAE</title>
+    <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="stylesheet" href="../assets/css/registro.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="../assets/images/icono.png" type="image/png">
+</head>
+<body>
+
+<main class="main-registro">
+    <div class="registro-card">
+        <aside class="sidebar-azul">
+            <div class="sidebar-content">
+                <img src="../assets/images/logo-blanco.png" alt="SRIAE" class="logo-white">
+                <h2>Bienvenido 👋</h2>
+                <p>Crea tu cuenta y forma parte de una comunidad más segura.</p>
+                
+                <div class="ilustracion">
+                    <img src="../assets/images/ilustracion-3d.png" alt="Seguridad Escolar">
+                </div>
+
+                <div class="info-seguridad">
+                    <i class="fas fa-lock"></i>
+                    <span>Tu información está protegida y segura</span>
+                </div>
+            </div>
+        </aside>
+
+        <section class="form-container">
+            <h1>Crea una <span>cuenta</span></h1>
+            <p class="form-subtitle">Completa la información para crear tu cuenta en el sistema.</p>
+
+            <form>
+                <div class="input-group">
+                    <i class="far fa-user"></i>
+                    <input type="text" placeholder="Nombre completo">
+                </div>
+
+                <div class="input-group">
+                    <i class="far fa-user"></i>
+                    <input type="text" placeholder="Apellido completo">
+                </div>
+
+                <div class="input-group">
+                    <i class="far fa-envelope"></i>
+                    <input type="email" placeholder="Correo electrónico">
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Contraseña">
+                    <i class="far fa-eye toggle-pass"></i>
+                </div>
+
+                <div class="role-selector">
+                    <div class="selector-box">
+                        <div class="icon-pfp"><i class="fas fa-user-shield"></i></div>
+                        <div class="text">
+                            <small>Rol</small>
+                            <p>Tutor</p>
+                        </div>
+                    </div>
+                    <div class="selector-box">
+                        <div class="icon-school"><i class="fas fa-school"></i></div>
+                        <div class="text">
+                            <small>Centro escolar</small>
+                            <p>ITCM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-continuar">
+                    Continuar <i class="fas fa-arrow-right"></i>
+                </button>
+
+                <div class="divider">
+                    <span>o</span>
+                </div>
+
+                <a href="login.html" class="btn-outline-registro">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                </a>
+
+                <div class="login-footer-info">
+                    <div class="icon-info"><i class="fas fa-user-circle"></i></div>
+                    <p>¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a> y accede al sistema.</p>
+                </div>
+
+                <p class="legal">
+                    <i class="fas fa-info-circle"></i> Al hacer clic en continuar aceptas nuestros 
+                    <a href="#">Términos de servicio</a> y <a href="#">Política de privacidad</a>.
+                </p>
+            </form>
+        </section>
+    </div>
+
+    <div class="features-footer">
+        <div class="feature-item">
+            <div class="f-icon green"><i class="fas fa-check-circle"></i></div>
+            <div class="f-text">
+                <strong>Seguridad</strong>
+                <p>Protegemos tus datos con los más altos estándares.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="f-icon orange"><i class="far fa-clock"></i></div>
+            <div class="f-text">
+                <strong>Eficiencia</strong>
+                <p>Gestiona incidentes de forma rápida y efectiva.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="f-icon purple"><i class="fas fa-users"></i></div>
+            <div class="f-text">
+                <strong>Comunidad</strong>
+                <p>Únete a una red de escuelas más seguras.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script type="module" src="scripts/registro.js"></script>
+</body>
+</html>

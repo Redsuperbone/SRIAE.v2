@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba Rápida WhatsApp</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f2f5; }
+        button { padding: 15px 30px; font-size: 18px; cursor: pointer; background: #25d366; color: white; border: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        button:active { transform: scale(0.98); }
+    </style>
+</head>
+<body>
+
+    <!-- El botón único -->
+    <button onclick="enviarPrueba()">🚀 Probar Envío WhatsApp</button>
+
+    <script>
+        async function enviarPrueba() {
+            // --- CONFIGURACIÓN (RELLENA ESTO) ---
+            const URL_API = "http://localhost:8080/message/sendText/Sistema SRIAE"; 
+            const API_KEY = "1532468790";
+            const NUMERO = "528333103584"; // Número con código de país sin el +
+            // ------------------------------------
+
+            try {
+                const response = await fetch(URL_API, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': API_KEY
+                    },
+                    body: JSON.stringify({
+                        "number": NUMERO,
+                        "text": "¡Funciona! Mensaje de prueba desde el botón simple. ✅"
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("¡Éxito! Mensaje enviado.");
+                } else {
+                    alert("Error de API: " + (data.message || "Revisa la consola"));
+                    console.log(data);
+                }
+            } catch (error) {
+                alert("No se pudo conectar a la API. ¿Está encendida la terminal?");
+                console.error(error);
+            }
+        }
+    </script>
+
+</body>
+</html>

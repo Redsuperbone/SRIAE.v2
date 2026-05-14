@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocolos - SRIAE</title>
+    <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="stylesheet" href="../assets/css/protocolos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<nav>
+    <div class="nav-container">
+        <div class="logo-box">
+            <img src="../assets/images/logo.png" alt="Logo">
+            <div class="logo-texto">
+                <span class="siglas">SRIAE</span>
+                <span class="subtitulo">Sistema de Incidentes y Alertas Escolares</span>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="estudiante.html"><i class="far fa-user"></i> Estudiante</a></li>
+            <li><a href="incidente.html"><i class="fas fa-exclamation-triangle"></i> Incidente</a></li>
+            <li><a class="activo" href="#"><i class="far fa-file-alt"></i> Protocolos</a></li>
+            <li><a href="reportes.html"><i class="fas fa-chart-bar"></i> Reportes</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <div class="notifications-container">
+                <div class="notif-icon" id="notifBtn">
+                    <i class="far fa-bell"></i>
+                    <span class="badge"></span>
+                </div>
+                <div class="dropdown-menu notif-dropdown" id="notifDropdown">
+                    <div class="notif-header">Notificaciones</div>
+                    <div class="notif-items">
+                        <a href="#" class="notif-item unread">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div class="notif-text">
+                                <p><strong>Nuevo Incidente:</strong> Juan Pérez - Incendio</p>
+                                <span>Hace 2 min</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        
+                    </div>
+                    <a href="#" class="view-all">Ver todas las alertas</a>
+                </div>
+            </div>
+
+            <div class="user-menu-container">
+                <div class="user-avatar" id="userBtn">
+                    <i class="far fa-user-circle"></i>
+                </div>
+                <div class="dropdown-menu" id="userDropdown">
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+                    <a href="registro.html"><i class="fas fa-user-plus"></i> Crear Cuenta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <main class="protocolos-main">
+        <div class="container-flex">
+            <aside class="info-sidebar">
+                <div class="sidebar-card">
+                    <h3>Seguridad que nos protege a todos</h3>
+                    <p>Conoce los protocolos de actuación para cada tipo de emergencia y mantén nuestra comunidad segura.</p>
+                    <div class="img-3d-box">
+                        <img src="../assets/images/ilustracion-3d.png" alt="Escuela Segura">
+                    </div>
+                    <div class="footer-note">
+                        <div class="icon-shield-blue"><i class="fas fa-shield-alt"></i></div>
+                        <p><strong>Tu seguridad es prioridad.</strong> Sigue los protocolos y ayuda a mantener un entorno seguro.</p>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="protocolos-content">
+                <header class="content-header">
+                    <div class="title-section">
+                        <h2>Protocolos</h2>
+                        <p>Selecciona un protocolo para ver las acciones recomendadas.</p>
+                    </div>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar protocolo...">
+                        <button class="filter-btn"><i class="fas fa-sliders-h"></i></button>
+                    </div>
+                </header>
+
+                <div class="protocolos-grid">
+                    <article class="protocol-card sismo">
+                        <div class="card-top">
+                            <div class="protocol-icon"><i class="fas fa-house-damage"></i></div>
+                            <div class="protocol-info">
+                                <h4>Sismo</h4>
+                                <p>Qué hacer en caso de temblor o terremoto.</p>
+                            </div>
+                        </div>
+                        <ul class="steps-list">
+                            <li><span>1</span> Mantén la calma y no corras.</li>
+                            <li><span>2</span> Aléjate de ventanas y objetos que puedan caer.</li>
+                            <li><span>3</span> Dirígete a la zona de seguridad asignada.</li>
+                        </ul>
+                        <a href="#" class="btn-view blue">Ver protocolo <i class="fas fa-arrow-right"></i></a>
+                    </article>
+
+                    <article class="protocol-card incendio">
+                        <div class="card-top">
+                            <div class="protocol-icon"><i class="fas fa-fire-extinguisher"></i></div>
+                            <div class="protocol-info">
+                                <h4>Incendio</h4>
+                                <p>Cómo actuar en caso de incendio.</p>
+                            </div>
+                        </div>
+                        <ul class="steps-list">
+                            <li><span>1</span> Mantén la calma y activa la alarma.</li>
+                            <li><span>2</span> Si es seguro, usa el extintor más cercano.</li>
+                            <li><span>3</span> Evacúa el área por la ruta indicada.</li>
+                        </ul>
+                        <a href="#" class="btn-view orange">Ver protocolo <i class="fas fa-arrow-right"></i></a>
+                    </article>
+
+                    <article class="protocol-card salud">
+                        <div class="card-top">
+                            <div class="protocol-icon"><i class="fas fa-first-aid"></i></div>
+                            <div class="protocol-info">
+                                <h4>Primeros Auxilios</h4>
+                                <p>Acciones básicas para brindar ayuda inmediata.</p>
+                            </div>
+                        </div>
+                        <ul class="steps-list">
+                            <li><span>1</span> Evalúa la situación y asegura el área.</li>
+                            <li><span>2</span> Brinda atención según la necesidad.</li>
+                            <li><span>3</span> Llama a servicios de emergencia si es necesario.</li>
+                        </ul>
+                        <a href="#" class="btn-view green">Ver protocolo <i class="fas fa-arrow-right"></i></a>
+                    </article>
+
+                    <article class="protocol-card evacuacion">
+                        <div class="card-top">
+                            <div class="protocol-icon"><i class="fas fa-walking"></i></div>
+                            <div class="protocol-info">
+                                <h4>Evacuación</h4>
+                                <p>Cómo evacuar de forma segura y ordenada.</p>
+                            </div>
+                        </div>
+                        <ul class="steps-list">
+                            <li><span>1</span> Sigue las instrucciones del personal.</li>
+                            <li><span>2</span> Dirígete a la salida más cercana.</li>
+                            <li><span>3</span> Reúnete en el punto de encuentro.</li>
+                        </ul>
+                        <a href="#" class="btn-view purple">Ver protocolo <i class="fas fa-arrow-right"></i></a>
+                    </article>
+                </div>
+
+                <footer class="tip-banner">
+                    <i class="fas fa-info-circle"></i>
+                    <p><strong>Recuerda:</strong> La prevención y la preparación son clave para una escuela más segura.</p>
+                </footer>
+            </section>
+        </div>
+    </main>
+
+<script>
+    
+    const userBtn = document.getElementById('userBtn');
+    const userDropdown = document.getElementById('userDropdown');
+    const notifBtn = document.getElementById('notifBtn');
+    const notifDropdown = document.getElementById('notifDropdown');
+
+    // Menú Usuario
+    userBtn.addEventListener('click', (e) => {
+        userDropdown.classList.toggle('show');
+        notifDropdown.classList.remove('show');
+        e.stopPropagation();
+    });
+
+    // Menú Notificaciones
+    notifBtn.addEventListener('click', (e) => {
+        notifDropdown.classList.toggle('show');
+        userDropdown.classList.remove('show');
+        e.stopPropagation();
+    });
+
+    // Cerrar todo al hacer clic fuera
+    window.addEventListener('click', (e) => {
+        if (!userBtn.contains(e.target)) userDropdown.classList.remove('show');
+        if (!notifBtn.contains(e.target)) notifDropdown.classList.remove('show');
+    });
+</script>
+<script type="module" src="scripts/sessionGuard.js"></script>
+</body>
+</html>

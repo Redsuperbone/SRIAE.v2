@@ -1,0 +1,268 @@
+:root {
+    --bg-main: #f5f7fb;
+    --navy-blue: #11429f;
+    --accent-blue: #3b82f6;
+    --text-dark: #0a1b3d;
+    --border-gray: #e5e9f2;
+    --white: #ffffff;
+    --red-soft: #fee2e2;
+    --red-text: #dc2626;
+}
+
+body {
+    background-color: var(--bg-main);
+    font-family: 'Inter', -apple-system, sans-serif;
+    margin: 0;
+    color: var(--text-dark);
+    padding-bottom: 40px;
+}
+
+.container-actualizar {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* Navegación superior */
+.top-navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.btn-back {
+    background: var(--white);
+    color: var(--navy-blue);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.btn-back:hover { transform: translateX(-3px); }
+
+/* Encabezado */
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header-info h1 { font-size: 1.5rem; margin: 0; font-weight: 800; color: var(--navy-blue); }
+.student-name { font-size: 1.2rem; margin: 5px 0 0; font-weight: 600; }
+.student-id { font-size: 0.9rem; color: #64748b; margin-top: 2px; }
+
+.header-avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--white);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    object-fit: cover;
+}
+
+/* Card Formulario */
+.card-form {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.icon-circle {
+    background: #eef2ff;
+    color: var(--navy-blue);
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-title h2 { font-size: 1.1rem; margin: 0; flex-grow: 1; }
+
+.quick-badges { display: flex; gap: 8px; }
+.badge { padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 800; }
+.type-a { background: var(--red-soft); color: var(--red-text); }
+.allergy-warning { background: #fef3c7; color: #d97706; }
+
+/* Inputs y Grupos */
+.input-group { margin-bottom: 20px; }
+.input-group label { display: block; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; color: #1e293b; }
+.input-group label i { color: #94a3b8; margin-left: 5px; cursor: help; }
+
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid var(--border-gray);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+textarea { height: 80px; resize: none; }
+input:focus, textarea:focus { border-color: var(--navy-blue); outline: none; background: #fcfdff; }
+
+/* Tags de Alergias */
+.tags-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.tag {
+    background: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.remove-tag { cursor: pointer; color: #94a3b8; }
+.remove-tag:hover { color: var(--red-text); }
+
+.inline-input { display: flex; gap: 10px; }
+.btn-add-inline {
+    background: var(--navy-blue);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Medicamentos Filas */
+.med-row { display: grid; grid-template-columns: 2fr 1fr 1.5fr auto; gap: 10px; margin-bottom: 10px; }
+.btn-remove-med {
+    background: #fff1f2;
+    color: #e11d48;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-add-more {
+    background: none;
+    border: 2px dashed var(--border-gray);
+    color: var(--navy-blue);
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.divider { border: 0; border-top: 1.5px solid var(--border-gray); margin: 30px 0; }
+
+.history-note { font-size: 0.8rem; color: #64748b; display: flex; align-items: center; gap: 8px; }
+
+/* Botones de Acción inferior */
+.action-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn-save {
+    background: var(--navy-blue);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(17, 66, 159, 0.2);
+}
+
+.btn-tutor {
+    background: white;
+    color: var(--navy-blue);
+    border: 1.5px solid var(--navy-blue);
+    padding: 15px;
+    border-radius: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.legal-footer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 30px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+    .profile-header { flex-direction: column-reverse; text-align: center; gap: 15px; }
+    .header-info h1 { font-size: 1.2rem; }
+    .card-form { padding: 20px; }
+    .med-row { grid-template-columns: 1fr 1fr; }
+    .btn-remove-med { grid-column: span 2; }
+    .action-footer { grid-template-columns: 1fr; }
+}
+
+/* Contenedor del icono */
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    margin-left: 5px;
+}
+
+/* El texto oculto */
+.tooltip-text {
+    visibility: hidden;
+    width: 180px;
+    background-color: #334155; /* Color oscuro profesional */
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 8px;
+    position: absolute;
+    z-index: 10;
+    bottom: 125%; /* Aparece arriba del icono */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.4;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* La flechita hacia abajo del cuadro */
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #334155 transparent transparent transparent;
+}
+
+/* Mostrar al pasar el mouse o hacer clic (en móvil el primer toque cuenta como hover) */
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}

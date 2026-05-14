@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRIAE - Notificaciones</title>
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" href="../assets/images/icono.png" type="image/png">
+</head>
+<body>
+<nav>
+  <div class="nav-container">
+    <div class="logo-box">
+      <img src="../assets/images/logo.png" alt="Logo">
+      <div class="logo-texto">
+        <span class="siglas">SRIAE</span>
+        <span class="subtitulo">Sistema de Incidentes y Alertas Escolares</span>
+      </div>
+    </div>
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+      <li><a href="estudiante.html"><i class="far fa-user"></i> Estudiante</a></li>
+      <li><a href="incidente.html"><i class="fas fa-exclamation-triangle"></i> Incidente</a></li>
+      <li><a href="protocolos.html"><i class="far fa-file-alt"></i> Protocolos</a></li>
+      <li><a href="reportes.html"><i class="fas fa-chart-bar"></i> Reportes</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="notifications-container">
+        <div class="notif-icon" id="notifBtn"><i class="far fa-bell"></i><span class="badge"></span></div>
+        <div class="dropdown-menu notif-dropdown" id="notifDropdown">
+          <div class="notif-header">Notificaciones</div>
+          <div class="notif-items"><div class="notif-item"><div class="notif-text"><p>Cargando...</p></div></div></div>
+          <a href="notificaciones.html" class="view-all">Ver todas las alertas</a>
+        </div>
+      </div>
+      <div class="user-menu-container">
+        <div class="user-avatar" id="userBtn"><i class="far fa-user-circle"></i></div>
+        <div class="dropdown-menu" id="userDropdown">
+          <a href="login.html"><i class="fas fa-sign-in-alt"></i> Iniciar Sesion</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<main class="admin-shell">
+  <header class="admin-header"><div class="admin-title"><h1>Notificaciones</h1><p>Alertas generadas por incidencias graves o medicas.</p></div></header>
+  <section class="admin-card">
+    <div class="notice-box"></div>
+    <div class="table-wrap"><table class="admin-table"><thead><tr><th>Estado</th><th>Titulo</th><th>Mensaje</th><th>Usuario</th><th>Fecha</th><th>Acciones</th></tr></thead><tbody id="notificationsTable"></tbody></table></div>
+  </section>
+</main>
+<script src="scripts/menuBase.js"></script>
+<script type="module" src="scripts/sessionGuard.js"></script>
+<script type="module" src="scripts/notificacionesPage.js"></script>
+</body>
+</html>

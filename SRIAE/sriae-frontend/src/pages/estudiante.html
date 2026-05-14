@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRIAE - Información del Estudiante</title>
+
+    <link rel="stylesheet" href="../assets/css/estudiante.css">
+    
+    <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="../assets/images/icono.png" type="image/png">
+</head>
+<body>
+
+
+<nav>
+    <div class="nav-container">
+        <div class="logo-box">
+            <img src="../assets/images/logo.png" alt="Logo">
+            <div class="logo-texto">
+                <span class="siglas">SRIAE</span>
+                <span class="subtitulo">Sistema de Incidentes y Alertas Escolares</span>
+            </div>
+        </div>
+
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a class="activo" href="#"><i class="far fa-user"></i> Estudiante</a></li>
+            <li><a href="incidente.html"><i class="fas fa-exclamation-triangle"></i> Incidente</a></li>
+            <li><a href="protocolos.html"><i class="far fa-file-alt"></i> Protocolos</a></li>
+            <li><a href="reportes.html"><i class="fas fa-chart-bar"></i> Reportes</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <div class="notifications-container">
+                <div class="notif-icon" id="notifBtn">
+                    <i class="far fa-bell"></i>
+                    <span class="badge"></span>
+                </div>
+                <div class="dropdown-menu notif-dropdown" id="notifDropdown">
+                    <div class="notif-header">Notificaciones</div>
+                    <div class="notif-items">
+                        <a href="#" class="notif-item unread">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div class="notif-text">
+                                <p><strong>Nuevo Incidente:</strong> Juan Pérez - Incendio</p>
+                                <span>Hace 2 min</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                        <a href="#" class="notif-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="notif-text">
+                                <p>Incidente de "Caída" marcado como resuelto.</p>
+                                <span>Hace 1 hora</span>
+                            </div>
+                        </a>
+                    </div>
+                    <a href="#" class="view-all">Ver todas las alertas</a>
+                </div>
+            </div>
+
+            <div class="user-menu-container">
+                <div class="user-avatar" id="userBtn">
+                    <i class="far fa-user-circle"></i>
+                </div>
+                <div class="dropdown-menu" id="userDropdown">
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+                    <a href="registro.html"><i class="fas fa-user-plus"></i> Crear Cuenta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<main class="container-estudiante">
+    <header class="search-section">
+        <h1>Seleccionar estudiante</h1>
+        <p>Busca y consulta la información del alumno.</p>
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Buscar por nombre, matricula, grado o grupo...">
+        </div>
+    </header>
+
+    <section class="quick-info">
+        <div class="info-card">
+            <div class="icon-box blue"><i class="fas fa-graduation-cap"></i></div>
+            <div class="info-content">
+                <span>Grado</span>
+                <select class="select-invisible-card" id="select-grado">
+                    <option value="">Todos los grados</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box blue"><i class="fas fa-users"></i></div>
+            <div class="info-content">
+                <span>Grupo</span>
+                <select class="select-invisible-card" id="select-grupo">
+                    <option value="">Todos los grupos</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="icon-box blue"><i class="fas fa-user"></i></div>
+            <div class="info-content">
+                <span>Alumno</span>
+                <select class="select-invisible-card" id="select-alumno">
+                    <option value="">Cargando alumnos...</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section class="student-profile">
+        <div class="data-group">
+            <div class="group-title">
+                <div class="icon-title"><i class="fas fa-user"></i></div>
+                <h2>Datos del alumno</h2>
+            </div>
+            
+            <div class="profile-layout">
+                <div class="text-data">
+                    <p>Cargando informacion del backend...</p>
+                </div>
+
+                <div class="photo-side">
+                    <div class="health-badges">
+                        <div class="badge-pill blood">N/D</div>
+                        <div class="badge-pill allergy" title="Alergia">Sin alergias</div>
+                    </div>
+                    <div class="photo-box">
+                        <div class="placeholder-img"><i class="fas fa-user"></i></div>
+                        <div class="photo-label">FOTO</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="data-group">
+            <div class="group-title">
+                <div class="icon-title"><i class="fas fa-users"></i></div>
+                <h2>Datos del padre o tutor</h2>
+            </div>
+            <div class="text-data tutor-grid">
+                <p>Cargando tutores del backend...</p>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="data-group">
+            <div class="group-title">
+                <div class="icon-title"><i class="fas fa-history"></i></div>
+                <h2>Historial de Incidentes</h2>
+            </div>
+            <div class="timeline">
+                <p>Cargando incidentes del backend...</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="action-footer">
+        <button class="btn btn-primary" onclick="window.location.href='actualizar-estudiante.html'"><i class="fas fa-sync-alt"></i> Actualizar información</button>
+        <button class="btn btn-outline" onclick="window.location.href='gestionar-tutor.html'"><i class="fas fa-user-plus"></i> Gestionar Tutor</button>
+        
+        <div class="info-banner">
+            <i class="fas fa-info-circle"></i>
+            <span>La información se utiliza únicamente para fines académicos y de seguridad escolar.</span>
+        </div>
+    </footer>
+</main>
+
+<script>
+    
+    const userBtn = document.getElementById('userBtn');
+    const userDropdown = document.getElementById('userDropdown');
+    const notifBtn = document.getElementById('notifBtn');
+    const notifDropdown = document.getElementById('notifDropdown');
+
+    // Menú Usuario
+    userBtn.addEventListener('click', (e) => {
+        userDropdown.classList.toggle('show');
+        notifDropdown.classList.remove('show');
+        e.stopPropagation();
+    });
+
+    // Menú Notificaciones
+    notifBtn.addEventListener('click', (e) => {
+        notifDropdown.classList.toggle('show');
+        userDropdown.classList.remove('show');
+        e.stopPropagation();
+    });
+
+    // Cerrar todo al hacer clic fuera
+    window.addEventListener('click', (e) => {
+        if (!userBtn.contains(e.target)) userDropdown.classList.remove('show');
+        if (!notifBtn.contains(e.target)) notifDropdown.classList.remove('show');
+    });
+</script>
+<script type="module" src="scripts/sessionGuard.js"></script>
+<script type="module" src="scripts/estudiante.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRIAE - Actualizar Información Médica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/actualizar.css">
+</head>
+<body>
+
+    <main class="container-actualizar">
+        <div class="top-navigation">
+            <a href="estudiante.html" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <span>Volver a Perfil de Estudiante</span>
+        </div>
+
+        <header class="profile-header">
+            <div class="header-info">
+                <h1>Actualizar Información Médica</h1>
+                <p class="student-name">Dan Eliezer</p>
+                <p class="student-id">Número de control: <strong>2026001</strong></p>
+            </div>
+            <div class="header-avatar">
+                <img src="../assets/images/estudiante_foto.jpg" alt="Foto del estudiante" onerror="this.src='https://via.placeholder.com/80'">
+            </div>
+        </header>
+
+        <section class="card-form">
+            <div class="section-title">
+                <div class="icon-circle"><i class="fas fa-user-shield"></i></div>
+                <h2>Datos Médicos y de Alergias</h2>
+                <div class="quick-badges">
+                    <span class="badge type-a">O+</span>
+                    <span class="badge allergy-warning">PENICILINA</span>
+                </div>
+            </div>
+
+            <form id="formActualizar">
+                <div class="input-group">
+                    <label>
+                        Alergias Conocidas 
+                        <span class="tooltip-container">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltip-text">Indique todas las sustancias que provocan reacción o efectos secundarios.</span>
+                        </span>
+                    </label>
+                    <div class="tags-container" id="alergiasTags">
+                        <span class="tag">Polen <i class="fas fa-times remove-tag"></i></span>
+                        <span class="tag">Nueces <i class="fas fa-times remove-tag"></i></span>
+                    </div>
+                    <div class="inline-input">
+                        <input type="text" id="inputAlergia" placeholder="Ej: Polvo, Mariscos...">
+                        <button type="button" class="btn-add-inline" onclick="addAlergia()">Añadir</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Condiciones Crónicas</label>
+                    <textarea placeholder="Ejemplo: Asma (especificar severidad y desencadenantes), Diabetes Tipo 1."></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Medicamentos Actuales</label>
+                    <div id="medicamentosList">
+                        <div class="med-row">
+                            <input type="text" placeholder="Medicamento" value="Ibuprofeno">
+                            <input type="text" placeholder="Dosis" value="200mg">
+                            <select>
+                                <option>Cada 8 horas</option>
+                                <option>Cada 12 horas</option>
+                                <option>Según sea necesario</option>
+                            </select>
+                            <button type="button" class="btn-remove-med"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add-more" onclick="addMedicamento()">
+                        <i class="fas fa-plus"></i> Añadir otro medicamento
+                    </button>
+                </div>
+
+                <hr class="divider">
+
+                <div class="input-group">
+                    <label>Instrucciones Especiales de Atención</label>
+                    <input type="text" placeholder="Ej: Llamar primero al pediatra Dra. García">
+                </div>
+
+                <div class="input-group">
+                    <label>Procedimiento de Emergencia</label>
+                    <textarea placeholder="¿Qué hacer en caso de crisis?"></textarea>
+                </div>
+
+                <div class="history-note">
+                    <i class="fas fa-clock-rotate-left"></i>
+                    Última actualización: 12 de Mayo 2026 por Dr. Ramírez
+                </div>
+            </form>
+        </section>
+
+        <footer class="action-footer">
+            <button type="submit" form="formActualizar" class="btn-save">
+                <i class="fas fa-check-circle"></i> Guardar Cambios
+            </button>
+            <button type="button" class="btn-tutor">
+                <i class="fas fa-user-friends"></i> Gestionar Tutor
+            </button>
+        </footer>
+
+        <p class="legal-footer">
+            <i class="fas fa-shield-halved"></i> La información se utiliza únicamente para fines académicos y de seguridad escolar.
+        </p>
+    </main>
+
+    <script>
+        // Función para añadir medicamentos
+        function addMedicamento() {
+            const list = document.getElementById('medicamentosList');
+            const row = document.createElement('div');
+            row.className = 'med-row';
+            row.innerHTML = `
+                <input type="text" placeholder="Medicamento">
+                <input type="text" placeholder="Dosis">
+                <select>
+                    <option>Cada 8 horas</option>
+                    <option>Cada 12 horas</option>
+                    <option>Según sea necesario</option>
+                </select>
+                <button type="button" class="btn-remove-med" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i></button>
+            `;
+            list.appendChild(row);
+        }
+
+        // Función para añadir alergias (Tags)
+        function addAlergia() {
+            const input = document.getElementById('inputAlergia');
+            const container = document.getElementById('alergiasTags');
+            if (input.value.trim() !== "") {
+                const tag = document.createElement('span');
+                tag.className = 'tag';
+                tag.innerHTML = `${input.value} <i class="fas fa-times remove-tag" onclick="this.parentElement.remove()"></i>`;
+                container.appendChild(tag);
+                input.value = "";
+            }
+        }
+    </script>
+<script type="module" src="scripts/sessionGuard.js"></script>
+<script type="module" src="scripts/actualizarEstudiante.js"></script>
+</body>
+</html>
