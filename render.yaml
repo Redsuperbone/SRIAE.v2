@@ -9,12 +9,26 @@ services:
       mountPath: /data/uploads
       sizeGB: 1
     envVars:
-      - key: SPRING_DATASOURCE_URL
-        sync: false
-      - key: MYSQL_USER
-        sync: false
-      - key: MYSQL_PASSWORD
-        sync: false
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: sriae-db
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: sriae-db
+          property: port
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: sriae-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: sriae-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: sriae-db
+          property: password
       - key: SRIAE_JWT_SECRET
         generateValue: true
       - key: SRIAE_UPLOAD_DIR
@@ -32,3 +46,8 @@ services:
     rootDir: SRIAE/sriae-frontend
     buildCommand: ""
     staticPublishPath: .
+
+databases:
+  - name: sriae-db
+    databaseName: sriae
+    user: sriae
