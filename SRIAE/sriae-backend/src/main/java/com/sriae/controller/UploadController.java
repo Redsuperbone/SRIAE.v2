@@ -2,6 +2,7 @@ package com.sriae.controller;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +19,11 @@ import java.nio.file.Paths;
 @RequestMapping("/api/uploads")
 public class UploadController {
 
-    private final Path uploadRoot = Paths.get("uploads").toAbsolutePath().normalize();
+    private final Path uploadRoot;
+
+    public UploadController(@Value("${sriae.upload.dir}") String uploadDir) {
+        this.uploadRoot = Paths.get(uploadDir).toAbsolutePath().normalize();
+    }
 
     @GetMapping("/{filename:.+}")
     @PreAuthorize("isAuthenticated()")

@@ -1,6 +1,7 @@
 const API_PORT = '8080';
 const API_PATH = '/api';
 const API_STORAGE_KEY = 'sriae_api_base_url';
+const RENDER_BACKEND_URL = 'https://sriae-backend.onrender.com';
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '::1']);
 
 function withApiPath(baseUrl) {
@@ -22,6 +23,10 @@ function getDefaultApiBaseUrl() {
 
   if (LOCAL_HOSTS.has(window.location.hostname)) {
     return withApiPath(`${window.location.protocol}//${getHostForUrl()}:${API_PORT}`);
+  }
+
+  if (window.location.hostname.endsWith('.onrender.com')) {
+    return withApiPath(RENDER_BACKEND_URL);
   }
 
   return `${window.location.origin}${API_PATH}`;

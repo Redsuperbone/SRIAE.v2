@@ -2,6 +2,7 @@ package com.sriae.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,15 +12,18 @@ import java.util.UUID;
 
 @Service
 public class UploadFileService {
-    private final String folder = "uploads";
+    private final Path folder;
+
+    public UploadFileService(@Value("${sriae.upload.dir}") String folder) {
+        this.folder = Paths.get(folder).toAbsolutePath().normalize();
+    }
 
     public String copiar(MultipartFile archivo) throws IOException {
-        Path carpeta = Paths.get(folder).toAbsolutePath();
-        Files.createDirectories(carpeta);
+        Files.createDirectories(folder);
 
         String nombreOriginal = Paths.get(archivo.getOriginalFilename()).getFileName().toString();
         String nombreArchivo = UUID.randomUUID() + "_" + nombreOriginal;
-        Path rutaAbsoluta = carpeta.resolve(nombreArchivo);
+        Path rutaAbsoluta = folder.resolve(nombreArchivo);
 
         Files.copy(archivo.getInputStream(), rutaAbsoluta);
         return nombreArchivo;
@@ -28,7 +32,7 @@ public class UploadFileService {
     public boolean eliminar(String nombreFoto) {
         if (nombreFoto == null || nombreFoto.isEmpty()) return false;
 
-        Path rutaAbsoluta = Paths.get(folder).toAbsolutePath().resolve(nombreFoto);
+        Path rutaAbsoluta = folder.resolve(nombreFoto).normalize();
         try {
             return Files.deleteIfExists(rutaAbsoluta);
         } catch (IOException e) {

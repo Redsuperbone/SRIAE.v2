@@ -79,6 +79,7 @@ public class SecurityConfig {
 
                         // Auth pública
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/health").permitAll()
 
                         // Registro público
                         .requestMatchers("/api/usuarios/registrar", "/api/usuarios/registrar/").permitAll()

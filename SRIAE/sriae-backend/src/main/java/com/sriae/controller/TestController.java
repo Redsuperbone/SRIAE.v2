@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class TestController {
 
+    @GetMapping("/health")
+    public String health() {
+        return "ok";
+    }
+
     @GetMapping("/prueba")
     @PreAuthorize("isAuthenticated()")
     public String prueba() {

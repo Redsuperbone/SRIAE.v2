@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: sriae-backend
+    runtime: docker
+    rootDir: SRIAE/sriae-backend
+    healthCheckPath: /api/health
+    disk:
+      name: sriae-uploads
+      mountPath: /data/uploads
+      sizeGB: 1
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: MYSQL_USER
+        sync: false
+      - key: MYSQL_PASSWORD
+        sync: false
+      - key: SRIAE_JWT_SECRET
+        generateValue: true
+      - key: SRIAE_UPLOAD_DIR
+        value: /data/uploads
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: SPRING_JPA_SHOW_SQL
+        value: "false"
+      - key: SRIAE_EMAIL_ENABLED
+        value: "false"
+
+  - type: web
+    name: sriae-frontend
+    runtime: static
+    rootDir: SRIAE/sriae-frontend
+    buildCommand: ""
+    staticPublishPath: .
