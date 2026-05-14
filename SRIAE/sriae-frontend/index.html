@@ -2,8 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=src/pages/index.html">
   <title>SRIAE</title>
+  <script>
+    const target = new URL('src/pages/index.html', window.location.href);
+    target.search = window.location.search;
+    target.hash = window.location.hash;
+    window.location.replace(target.href);
+  </script>
 </head>
 <body>
   <a href="src/pages/index.html">Abrir SRIAE</a>
