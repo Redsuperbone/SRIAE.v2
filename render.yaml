@@ -37,6 +37,14 @@ services:
         value: update
       - key: SPRING_JPA_SHOW_SQL
         value: "false"
+      - key: SRIAE_ADMIN_EMAIL
+        sync: false
+      - key: SRIAE_ADMIN_PASSWORD
+        sync: false
+      - key: SRIAE_ADMIN_NAME
+        value: Administrador
+      - key: SRIAE_ADMIN_LASTNAME
+        value: SRIAE
       - key: SRIAE_EMAIL_ENABLED
         value: "false"
 
