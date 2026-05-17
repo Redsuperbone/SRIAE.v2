@@ -46,7 +46,21 @@ services:
       - key: SRIAE_ADMIN_LASTNAME
         value: SRIAE
       - key: SRIAE_EMAIL_ENABLED
-        value: "false"
+        sync: false
+      - key: SRIAE_FRONTEND_BASE_URL
+        value: https://sriae-v2-4.onrender.com/src/pages
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USERNAME
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_AUTH
+        value: "true"
+      - key: SMTP_STARTTLS
+        value: "true"
 
   - type: web
     name: sriae-frontend
