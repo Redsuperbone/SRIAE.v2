@@ -53,7 +53,7 @@ public class IncidenteService {
         List<Incidente> incidentes = switch (rol) {
             case "ADMIN", "DIRECTOR" -> incidenteRepository.findAll(Sort.by(Sort.Direction.DESC, "fechaIncidente"));
             case "DOCENTE" -> incidenteRepository.findByDocenteId(usuario.getIdUsuario());
-            case "MEDICO" -> incidenteRepository.findByUsuarioReporta_IdUsuario(usuario.getIdUsuario());
+            case "ENFERMERA" -> incidenteRepository.findByUsuarioReporta_IdUsuario(usuario.getIdUsuario());
             case "TUTOR" -> incidenteRepository.findByTutorId(usuario.getIdUsuario());
             default -> List.of();
         };
@@ -83,7 +83,7 @@ public class IncidenteService {
         incidente.setTipo(request.getTipo());
         incidente.setNivelAlerta(request.getNivelAlerta());
         incidente.setEstado("PENDIENTE");
-        incidente.setFechaIncidente(LocalDateTime.now());
+        incidente.setFechaIncidente(request.getFechaIncidente() != null ? request.getFechaIncidente() : LocalDateTime.now());
         incidente.setUsuarioReporta(usuario);
         incidente.setEstudiante(estudiante);
 

@@ -196,7 +196,7 @@ public class EstudianteService {
         String rol = RoleUtils.normalizeRole(usuario.getTipoUsuario());
         List<Estudiante> estudiantes = estudianteRepository.findAll();
         return switch (rol) {
-            case "ADMIN", "DIRECTOR", "MEDICO" -> estudiantes;
+            case "ADMIN", "DIRECTOR", "ENFERMERA" -> estudiantes;
             case "DOCENTE" -> estudiantes.stream()
                     .filter(estudiante -> estaRelacionado(estudiante.getDocentes(), usuario.getIdUsuario()))
                     .toList();

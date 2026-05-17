@@ -98,7 +98,7 @@ public class HistorialMedicoService {
 
     private boolean puedeVerHistorial(Usuario usuario, HistorialMedico historial) {
         String rol = RoleUtils.normalizeRole(usuario.getTipoUsuario());
-        if ("ADMIN".equals(rol) || "MEDICO".equals(rol)) {
+        if ("ADMIN".equals(rol) || "ENFERMERA".equals(rol)) {
             return true;
         }
 

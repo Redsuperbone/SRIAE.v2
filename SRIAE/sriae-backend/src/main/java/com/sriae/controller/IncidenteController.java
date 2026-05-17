@@ -41,7 +41,7 @@ public class IncidenteController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE','MEDICO','TUTOR')")
+    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE','ENFERMERA','TUTOR')")
     public List<IncidenteResponse> listar(
             Authentication authentication,
             @RequestParam(required = false) Integer matricula,
@@ -52,7 +52,7 @@ public class IncidenteController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyRole('ADMIN','DOCENTE','MEDICO')")
+    @PreAuthorize("hasAnyRole('ADMIN','DOCENTE','ENFERMERA')")
     public ResponseEntity<IncidenteResponse> guardar(
             Authentication authentication,
             @Valid @RequestBody IncidenteRequest request) throws IOException {
@@ -61,7 +61,7 @@ public class IncidenteController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasAnyRole('ADMIN','DOCENTE','MEDICO')")
+    @PreAuthorize("hasAnyRole('ADMIN','DOCENTE','ENFERMERA')")
     public ResponseEntity<IncidenteResponse> guardarConFoto(
             Authentication authentication,
             @Valid @ModelAttribute IncidenteRequest request,
@@ -71,7 +71,7 @@ public class IncidenteController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','DOCENTE','MEDICO')")
+    @PreAuthorize("hasAnyRole('ADMIN','DOCENTE','ENFERMERA')")
     public IncidenteResponse actualizar(
             @PathVariable Integer id,
             @RequestBody IncidenteUpdateRequest request,
@@ -80,7 +80,7 @@ public class IncidenteController {
     }
 
     @PatchMapping("/{id}/estado")
-    @PreAuthorize("hasAnyRole('ADMIN','DOCENTE','MEDICO')")
+    @PreAuthorize("hasAnyRole('ADMIN','DOCENTE','ENFERMERA')")
     public IncidenteResponse actualizarEstado(
             @PathVariable Integer id,
             @RequestParam("nuevoEstado") String nuevoEstado,

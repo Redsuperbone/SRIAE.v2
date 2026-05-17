@@ -42,7 +42,7 @@ const ROLE_ACCESS = {
     'notificaciones.html',
     'perfil.html'
   ],
-  MEDICO: [
+  ENFERMERA: [
     'index.html',
     'estudiante.html',
     'gestion-estudiantes.html',
@@ -159,7 +159,7 @@ function applyRoleVisibility() {
     });
   }
 
-  if (role !== 'ADMIN' && role !== 'MEDICO') {
+  if (role !== 'ADMIN' && role !== 'ENFERMERA') {
     document.querySelectorAll('#medicalForm, #exportMedical').forEach((el) => {
       el.style.display = 'none';
     });

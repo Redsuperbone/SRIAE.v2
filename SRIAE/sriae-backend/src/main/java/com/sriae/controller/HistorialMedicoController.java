@@ -33,7 +33,7 @@ public class HistorialMedicoController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN','MEDICO','DOCENTE')")
+    @PreAuthorize("hasAnyRole('ADMIN','ENFERMERA','DOCENTE')")
     public List<HistorialMedicoResponse> listar(
             @RequestParam(required = false) Integer matricula,
             Authentication authentication) {
@@ -41,13 +41,13 @@ public class HistorialMedicoController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','MEDICO','DOCENTE')")
+    @PreAuthorize("hasAnyRole('ADMIN','ENFERMERA','DOCENTE')")
     public HistorialMedicoResponse obtener(@PathVariable Integer id, Authentication authentication) {
         return historialMedicoService.obtener(id, authentication.getName());
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','MEDICO')")
+    @PreAuthorize("hasAnyRole('ADMIN','ENFERMERA')")
     public ResponseEntity<HistorialMedicoResponse> crear(
             @Valid @RequestBody HistorialMedicoRequest request,
             Authentication authentication) {
@@ -56,7 +56,7 @@ public class HistorialMedicoController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','MEDICO')")
+    @PreAuthorize("hasAnyRole('ADMIN','ENFERMERA')")
     public HistorialMedicoResponse actualizar(
             @PathVariable Integer id,
             @Valid @RequestBody HistorialMedicoRequest request,

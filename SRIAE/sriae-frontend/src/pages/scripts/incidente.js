@@ -198,6 +198,8 @@ function incidentePayload() {
   const tipoSelect = document.getElementById('tipo-incidente');
   const descripcion = document.querySelector('.field-group textarea')?.value.trim();
   const matriculaEstudiante = Number(selectAlumno?.value);
+  const fecha = document.getElementById('fecha-incidente')?.value;
+  const hora = document.getElementById('hora-incidente')?.value;
 
   return {
     titulo: tipoSelect?.selectedOptions[0]?.text || 'Incidente',
@@ -205,13 +207,15 @@ function incidentePayload() {
     ubicacion: document.getElementById('lugar-incidente')?.value || '',
     tipo: tipoSelect?.selectedOptions[0]?.text || tipoSelect?.value || 'Incidente',
     nivelAlerta: gravedadBackend(document.getElementById('select-gravedad')?.value),
-    matriculaEstudiante
+    matriculaEstudiante,
+    fechaIncidente: fecha ? `${fecha}T${hora || '00:00'}:00` : null
   };
 }
 
 async function postMultipart(payload, file) {
   const formData = new FormData();
   for (const [key, value] of Object.entries(payload)) {
+    if (value === null || value === undefined) continue;
     formData.append(key, value);
   }
   formData.append('foto', file);

@@ -10,7 +10,7 @@ const role = getRole();
 
 function value(id) { return document.getElementById(id)?.value.trim(); }
 function setValue(id, value) { const el = document.getElementById(id); if (el) el.value = value ?? ''; }
-function canEdit() { return role === 'ADMIN' || role === 'MEDICO'; }
+function canEdit() { return role === 'ADMIN' || role === 'ENFERMERA'; }
 
 function payload() {
   return {
@@ -66,7 +66,7 @@ async function loadRecords() {
 
 form?.addEventListener('submit', async (event) => {
   event.preventDefault();
-  if (!canEdit()) return alert('Solo ADMIN o MEDICO puede guardar historial medico.');
+  if (!canEdit()) return alert('Solo ADMIN o ENFERMERA puede guardar historial medico.');
   const id = value('idHistorial');
   if (id) await apiPut(`/historial-medico/${id}`, payload());
   else await apiPost('/historial-medico', payload());

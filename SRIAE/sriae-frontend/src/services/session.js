@@ -7,7 +7,10 @@ function normalizeRole(role) {
     ADMINISTRADOR: 'ADMIN',
     DIRECTOR: 'DIRECTOR',
     MAESTRO: 'DOCENTE',
-    PROFESOR: 'DOCENTE'
+    PROFESOR: 'DOCENTE',
+    MEDICO: 'ENFERMERA',
+    MEDICA: 'ENFERMERA',
+    ENFERMERO: 'ENFERMERA'
   };
   return aliases[value] || value;
 }

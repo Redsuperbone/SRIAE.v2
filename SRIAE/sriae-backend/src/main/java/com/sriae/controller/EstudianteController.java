@@ -34,7 +34,7 @@ public class EstudianteController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE','MEDICO','TUTOR')")
+    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE','ENFERMERA','TUTOR')")
     public List<EstudianteResponse> buscar(
             Authentication authentication,
             @RequestParam(required = false) String nombre,
@@ -44,7 +44,7 @@ public class EstudianteController {
     }
 
     @GetMapping("/{matricula}")
-    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE','MEDICO','TUTOR')")
+    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE','ENFERMERA','TUTOR')")
     public EstudianteResponse obtener(Authentication authentication, @PathVariable Integer matricula) {
         return estudianteService.obtener(authentication.getName(), matricula);
     }
@@ -93,7 +93,7 @@ public class EstudianteController {
     }
 
     @GetMapping("/{matricula}/tutores")
-    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE','MEDICO')")
+    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE','ENFERMERA')")
     public List<UsuarioResponse> listarTutores(@PathVariable Integer matricula) {
         return estudianteService.listarTutores(matricula);
     }
@@ -117,7 +117,7 @@ public class EstudianteController {
     }
 
     @GetMapping("/{matricula}/docentes")
-    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','MEDICO')")
+    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','ENFERMERA')")
     public List<UsuarioResponse> listarDocentes(@PathVariable Integer matricula) {
         return estudianteService.listarDocentes(matricula);
     }

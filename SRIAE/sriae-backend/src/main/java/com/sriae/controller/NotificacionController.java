@@ -31,13 +31,13 @@ public class NotificacionController {
     }
 
     @GetMapping("/usuario/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','TUTOR','DOCENTE','MEDICO','ALUMNO')")
+    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','TUTOR','DOCENTE','ENFERMERA','ALUMNO')")
     public List<NotificacionResponse> listarPorUsuario(@PathVariable Integer id, Authentication authentication) {
         return notificacionService.listarPorUsuario(id, authentication.getName());
     }
 
     @PutMapping("/{id}/leida")
-    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','TUTOR','DOCENTE','MEDICO','ALUMNO')")
+    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','TUTOR','DOCENTE','ENFERMERA','ALUMNO')")
     public NotificacionResponse marcarComoLeida(@PathVariable Integer id, Authentication authentication) {
         return notificacionService.marcarComoLeida(id, authentication.getName());
     }

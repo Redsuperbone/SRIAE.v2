@@ -47,10 +47,15 @@
 <main class="admin-shell">
   <section class="admin-card" style="max-width:520px;margin:40px auto;">
     <h1>Recuperar contrasena</h1>
-    <p class="hint">Flujo academico simple: registra la solicitud y simula el envio de correo.</p>
+    <p class="hint" id="recoverHint">Ingresa tu correo para recibir un enlace de recuperacion.</p>
     <form id="recoverForm" class="form-grid">
       <div class="field full"><label>Correo registrado</label><input id="correo" type="email" required></div>
       <div class="field full"><button class="btn-admin btn-primary-admin" type="submit"><i class="fas fa-envelope"></i> Enviar solicitud</button></div>
+    </form>
+    <form id="resetForm" class="form-grid" style="display:none">
+      <div class="field full"><label>Nueva contrasena</label><input id="nuevaContrasena" type="password" minlength="6" required></div>
+      <div class="field full"><label>Confirmar contrasena</label><input id="confirmarContrasena" type="password" minlength="6" required></div>
+      <div class="field full"><button class="btn-admin btn-primary-admin" type="submit"><i class="fas fa-key"></i> Guardar nueva contrasena</button></div>
     </form>
     <div id="recoverResult" class="notice-box" style="display:none;margin-top:16px"></div>
   </section>

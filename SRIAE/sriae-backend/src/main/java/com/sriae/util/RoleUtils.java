@@ -19,7 +19,7 @@ public final class RoleUtils {
             case "ADMINISTRADOR" -> "ADMIN";
             case "DIRECTOR" -> "DIRECTOR";
             case "MAESTRO", "PROFESOR" -> "DOCENTE";
-            case "ENFERMERO", "ENFERMERA" -> "MEDICO";
+            case "MEDICO", "MEDICA", "ENFERMERO" -> "ENFERMERA";
             default -> role;
         };
     }

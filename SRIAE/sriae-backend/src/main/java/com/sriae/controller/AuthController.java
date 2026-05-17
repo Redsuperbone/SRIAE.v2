@@ -2,6 +2,8 @@ package com.sriae.controller;
 
 import com.sriae.dto.LoginRequest;
 import com.sriae.dto.LoginResponse;
+import com.sriae.dto.RecuperacionContrasenaRequest;
+import com.sriae.dto.RestablecerContrasenaRequest;
 import com.sriae.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +25,17 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+    @PostMapping("/recuperar")
+    public ResponseEntity<Void> solicitarRecuperacion(@Valid @RequestBody RecuperacionContrasenaRequest request) {
+        authService.solicitarRecuperacion(request);
+        return ResponseEntity.accepted().build();
+    }
+
+    @PostMapping("/restablecer")
+    public ResponseEntity<Void> restablecerContrasena(@Valid @RequestBody RestablecerContrasenaRequest request) {
+        authService.restablecerContrasena(request);
+        return ResponseEntity.noContent().build();
     }
 }

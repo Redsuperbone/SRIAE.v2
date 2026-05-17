@@ -25,13 +25,13 @@ public class ExportController {
     }
 
     @GetMapping("/incidencias/csv")
-    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE','MEDICO')")
+    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE','ENFERMERA')")
     public ResponseEntity<String> exportarIncidenciasCsv(Authentication authentication) {
         return csv("incidencias.csv", exportService.exportarIncidenciasCsv(authentication.getName()));
     }
 
     @GetMapping("/historial-medico/csv")
-    @PreAuthorize("hasAnyRole('ADMIN','MEDICO')")
+    @PreAuthorize("hasAnyRole('ADMIN','ENFERMERA')")
     public ResponseEntity<String> exportarHistorialMedicoCsv() {
         return csv("historial-medico.csv", exportService.exportarHistorialMedicoCsv());
     }

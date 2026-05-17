@@ -3,6 +3,8 @@ package com.sriae.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
+
 public class IncidenteRequest {
 
     @NotBlank(message = "El titulo es obligatorio")
@@ -22,6 +24,8 @@ public class IncidenteRequest {
     @NotNull(message = "La matricula del alumno es obligatoria")
     private Integer matriculaEstudiante;
 
+    private LocalDateTime fechaIncidente;
+
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
     public String getDescripcion() { return descripcion; }
@@ -34,4 +38,6 @@ public class IncidenteRequest {
     public void setNivelAlerta(String nivelAlerta) { this.nivelAlerta = nivelAlerta; }
     public Integer getMatriculaEstudiante() { return matriculaEstudiante; }
     public void setMatriculaEstudiante(Integer matriculaEstudiante) { this.matriculaEstudiante = matriculaEstudiante; }
+    public LocalDateTime getFechaIncidente() { return fechaIncidente; }
+    public void setFechaIncidente(LocalDateTime fechaIncidente) { this.fechaIncidente = fechaIncidente; }
 }

@@ -2,18 +2,25 @@ package com.sriae.service;
 
 import com.sriae.dto.LoginRequest;
 import com.sriae.dto.LoginResponse;
+import com.sriae.dto.RecuperacionContrasenaRequest;
+import com.sriae.dto.RestablecerContrasenaRequest;
 import com.sriae.dto.UsuarioRegistroRequest;
 import com.sriae.exception.BadRequestException;
 import com.sriae.exception.ResourceNotFoundException;
+import com.sriae.model.RecuperacionContrasenaToken;
 import com.sriae.model.Usuario;
+import com.sriae.repository.RecuperacionContrasenaTokenRepository;
 import com.sriae.repository.UsuarioRepository;
 import com.sriae.security.JwtUtil;
 import com.sriae.util.RoleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -26,6 +33,12 @@ public class AuthService {
     private JwtUtil jwtUtil;
     @Autowired
     private AuditoriaService auditoriaService;
+    @Autowired
+    private RecuperacionContrasenaTokenRepository recuperacionTokenRepository;
+    @Autowired
+    private CorreoRecuperacionService correoRecuperacionService;
+
+    private static final int MINUTOS_VIGENCIA_RECUPERACION = 30;
 
     public LoginResponse login(LoginRequest request) {
         Usuario usuario = usuarioRepository.findByCorreo(request.getCorreoElectronico())
@@ -67,5 +80,44 @@ public class AuthService {
         Usuario guardado = usuarioRepository.save(usuario);
         auditoriaService.registrar(guardado.getCorreo(), "REGISTRO_USUARIO", "Rol: " + guardado.getTipoUsuario());
         return guardado;
+    }
+
+    @Transactional
+    public void solicitarRecuperacion(RecuperacionContrasenaRequest request) {
+        Usuario usuario = usuarioRepository.findByCorreo(request.getCorreoElectronico())
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        recuperacionTokenRepository.deleteByFechaExpiracionBefore(LocalDateTime.now());
+        recuperacionTokenRepository.deleteByUsuarioAndUsadoFalse(usuario);
+
+        RecuperacionContrasenaToken token = new RecuperacionContrasenaToken();
+        token.setUsuario(usuario);
+        token.setToken(UUID.randomUUID().toString().replace("-", "") + UUID.randomUUID().toString().replace("-", ""));
+        token.setFechaExpiracion(LocalDateTime.now().plusMinutes(MINUTOS_VIGENCIA_RECUPERACION));
+        token.setUsado(false);
+        recuperacionTokenRepository.save(token);
+
+        correoRecuperacionService.enviarEnlace(usuario, token.getToken(), MINUTOS_VIGENCIA_RECUPERACION);
+        auditoriaService.registrar(usuario.getCorreo(), "SOLICITO_RECUPERACION_CONTRASENA", "Correo de recuperacion enviado");
+    }
+
+    @Transactional
+    public void restablecerContrasena(RestablecerContrasenaRequest request) {
+        RecuperacionContrasenaToken token = recuperacionTokenRepository.findByTokenAndUsadoFalse(request.getToken())
+                .orElseThrow(() -> new BadRequestException("Token de recuperacion invalido"));
+
+        if (token.getFechaExpiracion().isBefore(LocalDateTime.now())) {
+            token.setUsado(true);
+            recuperacionTokenRepository.save(token);
+            throw new BadRequestException("El enlace de recuperacion expiro");
+        }
+
+        Usuario usuario = token.getUsuario();
+        usuario.setContrasena(passwordEncoder.encode(request.getNuevaContrasena()));
+        usuarioRepository.save(usuario);
+
+        token.setUsado(true);
+        recuperacionTokenRepository.save(token);
+        auditoriaService.registrar(usuario.getCorreo(), "RESTABLECIO_CONTRASENA", "Contrasena actualizada mediante recuperacion");
     }
 }

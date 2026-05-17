@@ -11,6 +11,14 @@ export async function registerUser(payload) {
   return apiPost('/usuarios/registrar', payload);
 }
 
+export async function recoverPassword(correo) {
+  return apiPost('/auth/recuperar', { correo });
+}
+
+export async function resetPassword(token, nuevaContrasena) {
+  return apiPost('/auth/restablecer', { token, nuevaContrasena });
+}
+
 export function logout() {
   clearSession();
   window.location.href = 'login.html';
