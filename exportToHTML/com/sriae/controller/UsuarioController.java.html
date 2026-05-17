@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>UsuarioController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+UsuarioController.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">sriae</span><span class="s2">.</span><span class="s1">controller</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">sriae</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Usuario</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">sriae</span><span class="s2">.</span><span class="s1">repository</span><span class="s2">.</span><span class="s1">UsuarioRepository</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">web</span><span class="s2">.</span><span class="s1">bind</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.*;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Optional</span><span class="s2">;</span>
+
+<span class="s1">@RestController</span>
+<span class="s1">@RequestMapping</span><span class="s2">(</span><span class="s3">&quot;/usuarios&quot;</span><span class="s2">)</span>
+<span class="s1">@CrossOrigin</span><span class="s2">(</span><span class="s3">&quot;*&quot;</span><span class="s2">)</span>
+<span class="s0">public class </span><span class="s1">UsuarioController </span><span class="s2">{</span>
+
+    <span class="s0">private final </span><span class="s1">UsuarioRepository usuarioRepository</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">UsuarioController</span><span class="s2">(</span><span class="s1">UsuarioRepository usuarioRepository</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">usuarioRepository </span><span class="s2">= </span><span class="s1">usuarioRepository</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s4">// GET TODOS</span>
+    <span class="s1">@GetMapping</span>
+    <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Usuario</span><span class="s2">&gt; </span><span class="s1">listar</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">usuarioRepository</span><span class="s2">.</span><span class="s1">findAll</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s4">// GET POR ID</span>
+    <span class="s1">@GetMapping</span><span class="s2">(</span><span class="s3">&quot;/{id}&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">Optional</span><span class="s2">&lt;</span><span class="s1">Usuario</span><span class="s2">&gt; </span><span class="s1">buscar</span><span class="s2">(</span><span class="s1">@PathVariable Integer id</span><span class="s2">) {</span>
+        <span class="s0">return </span><span class="s1">usuarioRepository</span><span class="s2">.</span><span class="s1">findById</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s4">// POST CREAR</span>
+    <span class="s1">@PostMapping</span>
+    <span class="s0">public </span><span class="s1">Usuario guardar</span><span class="s2">(</span><span class="s1">@RequestBody Usuario usuario</span><span class="s2">) {</span>
+        <span class="s0">return </span><span class="s1">usuarioRepository</span><span class="s2">.</span><span class="s1">save</span><span class="s2">(</span><span class="s1">usuario</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s4">// DELETE</span>
+    <span class="s1">@DeleteMapping</span><span class="s2">(</span><span class="s3">&quot;/{id}&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">String eliminar</span><span class="s2">(</span><span class="s1">@PathVariable Integer id</span><span class="s2">) {</span>
+        <span class="s1">usuarioRepository</span><span class="s2">.</span><span class="s1">deleteById</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+        <span class="s0">return </span><span class="s3">&quot;Usuario eliminado&quot;</span><span class="s2">;</span>
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>
