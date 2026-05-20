@@ -72,13 +72,13 @@ const NAV_ITEMS = [
   { href: 'estudiante.html', icon: 'far fa-user', label: 'Estudiante' },
   { href: 'gestion-estudiantes.html', icon: 'fas fa-user-graduate', label: 'Gestion estudiantes' },
   { href: 'incidente.html', icon: 'fas fa-exclamation-triangle', label: 'Incidente' },
-  { href: 'protocolos.html', icon: 'far fa-file-alt', label: 'Protocolos' },
-  { href: 'reportes.html', icon: 'fas fa-chart-bar', label: 'Reportes' }
+  { href: 'protocolos.html', icon: 'far fa-file-alt', label: 'Protocolos' }
 ];
 
 const USER_MENU_ITEMS = [
   { href: 'perfil.html', icon: 'far fa-address-card', label: 'Mi perfil' },
   { href: 'gestion-estudiantes.html', icon: 'fas fa-user-graduate', label: 'Gestion estudiantes' },
+  { href: 'reportes.html', icon: 'fas fa-chart-bar', label: 'Reportes' },
   { href: 'historial-medico.html', icon: 'fas fa-notes-medical', label: 'Historial medico' },
   { href: 'notificaciones.html', icon: 'far fa-bell', label: 'Notificaciones' },
   { href: 'usuarios.html', icon: 'fas fa-users-cog', label: 'Usuarios' },
