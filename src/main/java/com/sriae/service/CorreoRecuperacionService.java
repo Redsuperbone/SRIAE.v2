@@ -2,6 +2,7 @@ package com.sriae.service;
 
 import com.sriae.exception.BadRequestException;
 import com.sriae.model.Usuario;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
@@ -32,13 +33,23 @@ public class CorreoRecuperacionService {
         this.frontendBaseUrl = frontendBaseUrl;
     }
 
+    @PostConstruct
+    public void logConfiguracion() {
+        logger.info("Correo de recuperacion: enabled={}, fromConfigurado={}, frontendBaseUrl={}",
+                enabled,
+                from != null && !from.isBlank(),
+                frontendBaseUrl);
+    }
+
     public void enviarEnlace(Usuario usuario, String token, int minutosVigencia) {
         if (!enabled) {
+            logger.warn("Correo de recuperacion desactivado. Define SRIAE_EMAIL_ENABLED=true.");
             throw new BadRequestException("El envio de correos no esta configurado");
         }
 
         JavaMailSender mailSender = mailSenderProvider.getIfAvailable();
         if (mailSender == null) {
+            logger.warn("No hay JavaMailSender configurado para correo de recuperacion.");
             throw new BadRequestException("No hay servicio SMTP disponible");
         }
 
