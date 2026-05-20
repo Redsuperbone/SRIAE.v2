@@ -25,7 +25,7 @@ public class CorreoRecuperacionService {
     public CorreoRecuperacionService(
             ObjectProvider<JavaMailSender> mailSenderProvider,
             @Value("${sriae.email.enabled:false}") boolean enabled,
-            @Value("${spring.mail.username:}") String from,
+            @Value("${sriae.email.from:}") String from,
             @Value("${sriae.frontend.base-url:http://localhost:5500/src/pages}") String frontendBaseUrl) {
         this.mailSenderProvider = mailSenderProvider;
         this.enabled = enabled;

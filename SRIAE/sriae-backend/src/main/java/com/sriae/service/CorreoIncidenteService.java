@@ -30,7 +30,7 @@ public class CorreoIncidenteService {
     public CorreoIncidenteService(
             ObjectProvider<JavaMailSender> mailSenderProvider,
             @Value("${sriae.email.enabled:false}") boolean enabled,
-            @Value("${spring.mail.username:}") String from) {
+            @Value("${sriae.email.from:}") String from) {
         this.mailSenderProvider = mailSenderProvider;
         this.enabled = enabled;
         this.from = from;
