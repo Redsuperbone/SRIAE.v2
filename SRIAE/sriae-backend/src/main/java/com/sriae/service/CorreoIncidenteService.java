@@ -5,6 +5,7 @@ import com.sriae.model.Incidente;
 import com.sriae.model.Usuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
@@ -35,29 +36,50 @@ public class CorreoIncidenteService {
         this.from = from;
     }
 
+    @PostConstruct
+    public void logConfiguracion() {
+        logger.info("Correo de incidentes: enabled={}, fromConfigurado={}", enabled, from != null && !from.isBlank());
+    }
+
     @Async
     public void enviarAvisoATutores(Incidente incidente) {
-        if (!enabled) {
-            logger.info("Envio automatico de correos desactivado. Define SRIAE_EMAIL_ENABLED=true y spring.mail.* para activarlo.");
-            return;
-        }
-
-        JavaMailSender mailSender = mailSenderProvider.getIfAvailable();
-        if (mailSender == null) {
-            logger.warn("No hay JavaMailSender configurado. No se enviaron correos del incidente {}.", incidente.getIdIncidente());
-            return;
-        }
-
-        Estudiante estudiante = incidente.getEstudiante();
-        List<Usuario> tutores = estudiante != null && estudiante.getTutores() != null
-                ? estudiante.getTutores()
-                : List.of();
-
-        for (Usuario tutor : tutores) {
-            if (tutor.getCorreo() == null || tutor.getCorreo().isBlank()) {
-                continue;
+        try {
+            if (!enabled) {
+                logger.info("Envio automatico de correos desactivado. Define SRIAE_EMAIL_ENABLED=true y spring.mail.* para activarlo.");
+                return;
             }
-            enviar(mailSender, tutor, incidente);
+
+            JavaMailSender mailSender = mailSenderProvider.getIfAvailable();
+            if (mailSender == null) {
+                logger.warn("No hay JavaMailSender configurado. No se enviaron correos del incidente {}.", incidente.getIdIncidente());
+                return;
+            }
+
+            Estudiante estudiante = incidente.getEstudiante();
+            List<Usuario> tutores = estudiante != null && estudiante.getTutores() != null
+                    ? estudiante.getTutores()
+                    : List.of();
+
+            logger.info("Preparando correo de incidente {} para {} tutor(es).",
+                    incidente.getIdIncidente(),
+                    tutores.size());
+
+            int enviados = 0;
+            for (Usuario tutor : tutores) {
+                if (tutor.getCorreo() == null || tutor.getCorreo().isBlank()) {
+                    logger.info("Tutor {} omitido porque no tiene correo.", tutor.getIdUsuario());
+                    continue;
+                }
+                enviar(mailSender, tutor, incidente);
+                enviados++;
+            }
+            logger.info("Proceso de correos del incidente {} terminado. Destinatarios intentados: {}.",
+                    incidente.getIdIncidente(),
+                    enviados);
+        } catch (Exception error) {
+            logger.warn("No fue posible procesar los correos del incidente {}: {}",
+                    incidente != null ? incidente.getIdIncidente() : "desconocido",
+                    error.getMessage());
         }
     }
 

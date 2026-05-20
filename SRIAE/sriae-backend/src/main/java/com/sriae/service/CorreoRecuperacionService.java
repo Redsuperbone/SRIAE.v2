@@ -2,6 +2,9 @@ package com.sriae.service;
 
 import com.sriae.exception.BadRequestException;
 import com.sriae.model.Usuario;
+import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CorreoRecuperacionService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CorreoRecuperacionService.class);
 
     private final ObjectProvider<JavaMailSender> mailSenderProvider;
     private final boolean enabled;
@@ -28,13 +33,23 @@ public class CorreoRecuperacionService {
         this.frontendBaseUrl = frontendBaseUrl;
     }
 
+    @PostConstruct
+    public void logConfiguracion() {
+        logger.info("Correo de recuperacion: enabled={}, fromConfigurado={}, frontendBaseUrl={}",
+                enabled,
+                from != null && !from.isBlank(),
+                frontendBaseUrl);
+    }
+
     public void enviarEnlace(Usuario usuario, String token, int minutosVigencia) {
         if (!enabled) {
+            logger.warn("Correo de recuperacion desactivado. Define SRIAE_EMAIL_ENABLED=true.");
             throw new BadRequestException("El envio de correos no esta configurado");
         }
 
         JavaMailSender mailSender = mailSenderProvider.getIfAvailable();
         if (mailSender == null) {
+            logger.warn("No hay JavaMailSender configurado para correo de recuperacion.");
             throw new BadRequestException("No hay servicio SMTP disponible");
         }
 
@@ -49,6 +64,9 @@ public class CorreoRecuperacionService {
         try {
             mailSender.send(message);
         } catch (MailException error) {
+            logger.warn("No fue posible enviar el correo de recuperacion a {}: {}",
+                    usuario.getCorreo(),
+                    error.getMessage());
             throw new BadRequestException("No fue posible enviar el correo de recuperacion");
         }
     }
