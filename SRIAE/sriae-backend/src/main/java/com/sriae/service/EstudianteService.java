@@ -13,11 +13,13 @@ import com.sriae.repository.TutorRepository;
 import com.sriae.repository.UsuarioRepository;
 import com.sriae.util.RoleUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class EstudianteService {
 
     private final EstudianteRepository estudianteRepository;
@@ -70,6 +72,7 @@ public class EstudianteService {
         return EstudianteResponse.fromEntity(estudiante);
     }
 
+    @Transactional
     public EstudianteResponse crear(EstudianteRequest request, String usuarioAccion) {
         Estudiante estudiante = new Estudiante();
         aplicarDatos(estudiante, request);
@@ -78,6 +81,7 @@ public class EstudianteService {
         return EstudianteResponse.fromEntity(guardado);
     }
 
+    @Transactional
     public EstudianteResponse actualizar(Integer matricula, EstudianteRequest request, String usuarioAccion) {
         Estudiante estudiante = obtenerEstudiante(matricula);
         aplicarDatos(estudiante, request);
@@ -86,12 +90,14 @@ public class EstudianteService {
         return EstudianteResponse.fromEntity(guardado);
     }
 
+    @Transactional
     public void eliminar(Integer matricula, String usuarioAccion) {
         Estudiante estudiante = obtenerEstudiante(matricula);
         estudianteRepository.delete(estudiante);
         auditoriaService.registrar(usuarioAccion, "ELIMINO_ESTUDIANTE", "Matricula: " + matricula);
     }
 
+    @Transactional
     public EstudianteResponse vincularTutor(Integer matricula, Integer idTutor, String usuarioAccion) {
         Estudiante estudiante = obtenerEstudiante(matricula);
         Usuario tutor = usuarioRepository.findById(idTutor)
@@ -118,6 +124,7 @@ public class EstudianteService {
         return EstudianteResponse.fromEntity(guardado);
     }
 
+    @Transactional
     public EstudianteResponse vincularDocente(Integer matricula, Integer idDocente, String usuarioAccion) {
         Estudiante estudiante = obtenerEstudiante(matricula);
         Usuario docente = usuarioRepository.findById(idDocente)
@@ -142,6 +149,7 @@ public class EstudianteService {
         return EstudianteResponse.fromEntity(guardado);
     }
 
+    @Transactional
     public EstudianteResponse desvincularTutor(Integer matricula, Integer idTutor, String usuarioAccion) {
         Estudiante estudiante = obtenerEstudiante(matricula);
 
@@ -154,6 +162,7 @@ public class EstudianteService {
         return EstudianteResponse.fromEntity(guardado);
     }
 
+    @Transactional
     public EstudianteResponse desvincularDocente(Integer matricula, Integer idDocente, String usuarioAccion) {
         Estudiante estudiante = obtenerEstudiante(matricula);
 

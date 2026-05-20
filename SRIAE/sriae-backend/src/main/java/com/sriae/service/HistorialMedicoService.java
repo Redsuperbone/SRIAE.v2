@@ -11,10 +11,12 @@ import com.sriae.repository.HistorialMedicoRepository;
 import com.sriae.repository.UsuarioRepository;
 import com.sriae.util.RoleUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class HistorialMedicoService {
 
     private final HistorialMedicoRepository historialMedicoRepository;
@@ -54,6 +56,7 @@ public class HistorialMedicoService {
         return HistorialMedicoResponse.fromEntity(historial);
     }
 
+    @Transactional
     public HistorialMedicoResponse crear(HistorialMedicoRequest request, String correoUsuario) {
         HistorialMedico historial = new HistorialMedico();
         historial.setEstudiante(obtenerEstudiante(request.getMatriculaEstudiante()));
@@ -65,6 +68,7 @@ public class HistorialMedicoService {
         return HistorialMedicoResponse.fromEntity(guardado);
     }
 
+    @Transactional
     public HistorialMedicoResponse actualizar(Integer id, HistorialMedicoRequest request, String correoUsuario) {
         HistorialMedico historial = obtenerHistorial(id);
         historial.setEstudiante(obtenerEstudiante(request.getMatriculaEstudiante()));
@@ -75,6 +79,7 @@ public class HistorialMedicoService {
         return HistorialMedicoResponse.fromEntity(guardado);
     }
 
+    @Transactional
     public void eliminar(Integer id, String correoUsuario) {
         HistorialMedico historial = obtenerHistorial(id);
         historialMedicoRepository.delete(historial);
