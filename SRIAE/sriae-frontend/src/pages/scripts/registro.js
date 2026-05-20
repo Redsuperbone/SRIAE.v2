@@ -11,7 +11,8 @@ form?.addEventListener('submit', async (event) => {
     nombreCompleto: inputs[0]?.value.trim(),
     apellidoCompleto: inputs[1]?.value.trim(),
     correo: inputs[2]?.value.trim(),
-    contrasena: inputs[3]?.value,
+    telefono: inputs[3]?.value.trim(),
+    contrasena: inputs[4]?.value,
     tipoUsuario: 'TUTOR'
   };
 
