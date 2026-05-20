@@ -13,6 +13,7 @@ import com.sriae.repository.UsuarioRepository;
 import com.sriae.util.RoleUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -71,9 +72,11 @@ public class IncidenteService {
                 .toList();
     }
 
+    @Transactional
     public IncidenteResponse crear(IncidenteRequest request, String correoUsuario, MultipartFile foto) throws IOException {
         Usuario usuario = obtenerUsuario(correoUsuario);
         Estudiante estudiante = obtenerEstudiante(request.getMatriculaEstudiante());
+        inicializarRelaciones(estudiante);
         validarPuedeRegistrarParaEstudiante(usuario, estudiante);
 
         Incidente incidente = new Incidente();
@@ -95,6 +98,7 @@ public class IncidenteService {
         return IncidenteResponse.fromEntity(guardado);
     }
 
+    @Transactional
     public IncidenteResponse actualizar(Integer id, IncidenteUpdateRequest request, String correoUsuario) {
         Incidente incidente = obtenerIncidente(id);
 
@@ -138,6 +142,15 @@ public class IncidenteService {
     private Estudiante obtenerEstudiante(Integer matricula) {
         return estudianteRepository.findById(matricula)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado"));
+    }
+
+    private void inicializarRelaciones(Estudiante estudiante) {
+        if (estudiante.getTutores() != null) {
+            estudiante.getTutores().size();
+        }
+        if (estudiante.getDocentes() != null) {
+            estudiante.getDocentes().size();
+        }
     }
 
     private Incidente obtenerIncidente(Integer id) {
