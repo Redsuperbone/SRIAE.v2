@@ -1,5 +1,7 @@
 package com.sriae.dto;
 
+import java.time.LocalDateTime;
+
 public class IncidenteUpdateRequest {
 
     private String titulo;
@@ -9,6 +11,7 @@ public class IncidenteUpdateRequest {
     private String nivelAlerta;
     private String estado;
     private Integer matriculaEstudiante;
+    private LocalDateTime fechaIncidente;
 
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
@@ -24,4 +27,6 @@ public class IncidenteUpdateRequest {
     public void setEstado(String estado) { this.estado = estado; }
     public Integer getMatriculaEstudiante() { return matriculaEstudiante; }
     public void setMatriculaEstudiante(Integer matriculaEstudiante) { this.matriculaEstudiante = matriculaEstudiante; }
+    public LocalDateTime getFechaIncidente() { return fechaIncidente; }
+    public void setFechaIncidente(LocalDateTime fechaIncidente) { this.fechaIncidente = fechaIncidente; }
 }

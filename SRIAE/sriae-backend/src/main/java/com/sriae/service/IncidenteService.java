@@ -64,7 +64,7 @@ public class IncidenteService {
                 .filter(incidente -> matricula == null
                         || (incidente.getEstudiante() != null && Objects.equals(incidente.getEstudiante().getMatricula(), matricula)))
                 .filter(incidente -> tipo == null || tipo.isBlank()
-                        || (incidente.getTipo() != null && incidente.getTipo().equalsIgnoreCase(tipo)))
+                        || coincideTipo(incidente, tipo))
                 .filter(incidente -> desde == null
                         || (incidente.getFechaIncidente() != null && !incidente.getFechaIncidente().toLocalDate().isBefore(desde)))
                 .filter(incidente -> hasta == null
@@ -109,6 +109,7 @@ public class IncidenteService {
         if (request.getTipo() != null) incidente.setTipo(request.getTipo());
         if (request.getNivelAlerta() != null) incidente.setNivelAlerta(request.getNivelAlerta());
         if (request.getEstado() != null) incidente.setEstado(request.getEstado());
+        if (request.getFechaIncidente() != null) incidente.setFechaIncidente(request.getFechaIncidente());
         if (request.getMatriculaEstudiante() != null) incidente.setEstudiante(obtenerEstudiante(request.getMatriculaEstudiante()));
 
         Incidente guardado = incidenteRepository.save(incidente);
@@ -159,6 +160,12 @@ public class IncidenteService {
     private Incidente obtenerIncidente(Integer id) {
         return incidenteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Incidente no encontrado"));
+    }
+
+    private boolean coincideTipo(Incidente incidente, String tipo) {
+        String filtro = tipo.trim();
+        return (incidente.getTipo() != null && incidente.getTipo().equalsIgnoreCase(filtro))
+                || (incidente.getTitulo() != null && incidente.getTitulo().equalsIgnoreCase(filtro));
     }
 
     private void validarPuedeRegistrarParaEstudiante(Usuario usuario, Estudiante estudiante) {

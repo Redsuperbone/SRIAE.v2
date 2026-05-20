@@ -84,6 +84,36 @@
             <h1 class="main-title">Reporte de Incidentes</h1>
         </div>
 
+        <section class="card report-filter-card">
+            <div class="search-header"><i class="fas fa-filter"></i> Consultar incidencias</div>
+            <div class="filter-grid report-filter-grid">
+                <div class="input-group">
+                    <label for="filterStudent"><i class="far fa-user"></i> Alumno</label>
+                    <select id="filterStudent">
+                        <option value="">Todos los alumnos</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="filterType"><i class="fas fa-exclamation-triangle"></i> Tipo de incidente</label>
+                    <select id="filterType">
+                        <option value="">Todos los tipos</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="filterFrom"><i class="far fa-calendar-alt"></i> Desde</label>
+                    <input type="date" id="filterFrom">
+                </div>
+                <div class="input-group">
+                    <label for="filterTo"><i class="far fa-calendar-alt"></i> Hasta</label>
+                    <input type="date" id="filterTo">
+                </div>
+                <div class="filter-actions">
+                    <button class="btn-filter-primary" type="button" id="applyFilters"><i class="fas fa-search"></i> Buscar</button>
+                    <button class="btn-filter-secondary" type="button" id="clearFilters"><i class="fas fa-times"></i> Limpiar</button>
+                </div>
+            </div>
+        </section>
+
         <section class="charts-layout">
             <div class="card chart-box">
                 <h3>Incidentes por Área</h3>
@@ -149,6 +179,65 @@
             <button class="btn-export-blue"><i class="fas fa-download"></i> Exportar reporte</button>
         </div>
     </main>
+
+    <div class="report-modal" id="incidentEditModal" hidden>
+        <div class="report-modal-card">
+            <div class="report-modal-header">
+                <h2>Editar incidente</h2>
+                <button type="button" class="modal-close" id="closeEditModal"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="incidentEditForm" class="edit-form">
+                <input type="hidden" id="editIncidentId">
+                <div class="edit-grid">
+                    <div class="input-group">
+                        <label for="editStudent">Alumno</label>
+                        <select id="editStudent" required></select>
+                    </div>
+                    <div class="input-group">
+                        <label for="editType">Tipo de incidente</label>
+                        <input type="text" id="editType" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="editSeverity">Gravedad</label>
+                        <select id="editSeverity" required>
+                            <option value="GRAVE">Grave</option>
+                            <option value="MEDIA">Media</option>
+                            <option value="BAJA">Baja</option>
+                            <option value="PREVENTIVA">Preventiva</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="editStatus">Estado</label>
+                        <select id="editStatus" required>
+                            <option value="PENDIENTE">Pendiente</option>
+                            <option value="EN_PROCESO">En proceso</option>
+                            <option value="CERRADA">Cerrada</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="editDate">Fecha</label>
+                        <input type="date" id="editDate">
+                    </div>
+                    <div class="input-group">
+                        <label for="editTime">Hora</label>
+                        <input type="time" id="editTime">
+                    </div>
+                    <div class="input-group">
+                        <label for="editLocation">Area</label>
+                        <input type="text" id="editLocation">
+                    </div>
+                    <div class="input-group edit-description">
+                        <label for="editDescription">Descripcion</label>
+                        <textarea id="editDescription" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-filter-secondary" id="cancelEdit">Cancelar</button>
+                    <button type="submit" class="btn-filter-primary"><i class="far fa-save"></i> Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
         const userBtn = document.getElementById('userBtn');
