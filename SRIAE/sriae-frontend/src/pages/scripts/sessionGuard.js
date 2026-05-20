@@ -135,7 +135,6 @@ function renderUserMenu() {
 
   const menuItems = [
     `<a href="#"><i class="far fa-user-circle"></i> ${user.nombre}</a>`,
-    `<a href="perfil.html"><i class="fas fa-id-badge"></i> ${role || 'USUARIO'}</a>`,
     ...USER_MENU_ITEMS
       .filter((item) => isAllowed(item.href))
       .map((item) => `<a href="${item.href}"><i class="${item.icon}"></i> ${item.label}</a>`),
