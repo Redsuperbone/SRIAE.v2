@@ -171,24 +171,24 @@
         <div class="icon-circle"><i class="fas fa-bell"></i></div>
         <div class="card-data">
             <p>Incidentes hoy</p>
-            <h2>3</h2>
-            <span class="trend up"><i class="fas fa-chart-line"></i> +1 respecto a ayer</span>
+            <h2 id="statsToday">--</h2>
+            <span class="trend up" id="statsTodayTrend"><i class="fas fa-chart-line"></i> Cargando datos</span>
         </div>
     </div>
     <div class="card card-naranja">
         <div class="icon-circle"><i class="fas fa-exclamation-triangle"></i></div>
         <div class="card-data">
             <p>Activos</p>
-            <h2>5</h2>
-            <span class="trend up"><i class="fas fa-chart-line"></i> +2 respecto a ayer</span>
+            <h2 id="statsActive">--</h2>
+            <span class="trend up" id="statsActiveTrend"><i class="fas fa-chart-line"></i> Cargando datos</span>
         </div>
     </div>
     <div class="card card-verde">
         <div class="icon-circle"><i class="fas fa-check-circle"></i></div>
         <div class="card-data">
             <p>Resueltos</p>
-            <h2>20</h2>
-            <span class="trend up"><i class="fas fa-chart-line"></i> +5 respecto a ayer</span>
+            <h2 id="statsResolved">--</h2>
+            <span class="trend up" id="statsResolvedTrend"><i class="fas fa-chart-line"></i> Cargando datos</span>
         </div>
     </div>
 </section>
@@ -271,5 +271,6 @@ function marcarGrupoSeguro() {
     </div>
 </div>
 <script type="module" src="scripts/sessionGuard.js"></script>
+<script type="module" src="scripts/index.js"></script>
 </body>
 </html>
