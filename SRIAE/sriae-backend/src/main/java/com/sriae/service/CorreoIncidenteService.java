@@ -89,7 +89,7 @@ public class CorreoIncidenteService {
             message.setFrom(from);
         }
         message.setTo(tutor.getCorreo());
-        message.setSubject("Aviso formal de incidente escolar");
+        message.setSubject("Aviso de incidente escolar");
         message.setText(construirMensaje(tutor, incidente));
 
         try {
@@ -107,7 +107,7 @@ public class CorreoIncidenteService {
         Estudiante estudiante = incidente.getEstudiante();
         String nombreTutor = nombreCompleto(tutor);
         String nombreActor = nombreCompleto(actor);
-        String rolActor = actor != null && actor.getTipoUsuario() != null ? actor.getTipoUsuario() : "personal autorizado";
+        String rolActor = rolParaCorreo(actor);
         String fecha = incidente.getFechaIncidente() != null
                 ? incidente.getFechaIncidente().format(DATE_FORMAT)
                 : "sin fecha registrada";
@@ -152,6 +152,14 @@ public class CorreoIncidenteService {
         }
         return ((usuario.getNombreCompleto() == null ? "" : usuario.getNombreCompleto()) + " "
                 + (usuario.getApellidoCompleto() == null ? "" : usuario.getApellidoCompleto())).trim();
+    }
+
+    private String rolParaCorreo(Usuario usuario) {
+        if (usuario == null || usuario.getTipoUsuario() == null || usuario.getTipoUsuario().isBlank()) {
+            return "personal autorizado";
+        }
+        String rol = usuario.getTipoUsuario().trim();
+        return "MEDICO".equalsIgnoreCase(rol) ? "enfermera/enfermero" : rol;
     }
 
     private String valor(Object value, String fallback) {
