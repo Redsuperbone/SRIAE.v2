@@ -1,5 +1,6 @@
 package com.sriae.security;
 
+import com.sriae.repository.UsuarioRepository;
 import com.sriae.util.RoleUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,6 +23,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Override
     protected void doFilterInternal(
@@ -56,6 +59,14 @@ public class JwtFilter extends OncePerRequestFilter {
                 && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             if (jwtUtil.validateToken(jwt)) {
+                boolean cuentaPermitida = usuarioRepository.findByCorreo(username)
+                        .filter(usuario -> usuario.isActivo() && !usuario.isEliminado())
+                        .isPresent();
+                if (!cuentaPermitida) {
+                    filterChain.doFilter(request, response);
+                    return;
+                }
+
                 String role = jwtUtil.extractRole(jwt);
 
                 UsernamePasswordAuthenticationToken authToken =

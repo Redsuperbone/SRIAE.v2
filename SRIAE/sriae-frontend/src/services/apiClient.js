@@ -77,6 +77,14 @@ export function apiPut(path, body) {
   });
 }
 
+export function apiPatch(path, body) {
+  return apiRequest(path, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+}
+
 export function apiDelete(path) {
   return apiRequest(path, { method: 'DELETE' });
 }

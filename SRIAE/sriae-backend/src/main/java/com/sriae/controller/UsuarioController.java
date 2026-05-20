@@ -1,6 +1,7 @@
 package com.sriae.controller;
 
 import com.sriae.dto.UsuarioRegistroRequest;
+import com.sriae.dto.UsuarioEstadoRequest;
 import com.sriae.dto.UsuarioPerfilUpdateRequest;
 import com.sriae.dto.UsuarioResponse;
 import com.sriae.exception.BadRequestException;
@@ -14,7 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -78,6 +82,7 @@ public class UsuarioController {
 
         return usuarios
                 .stream()
+                .filter(usuario -> !usuario.isEliminado())
                 .map(UsuarioResponse::fromEntity)
                 .toList();
     }
@@ -93,5 +98,40 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponse> crear(@Valid @RequestBody UsuarioRegistroRequest request) {
         Usuario usuario = authService.registrar(request, true);
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioResponse.fromEntity(usuario));
+    }
+
+    @PatchMapping("/{id}/estado")
+    @PreAuthorize("hasRole('ADMIN')")
+    public UsuarioResponse actualizarEstado(
+            @PathVariable Integer id,
+            @Valid @RequestBody UsuarioEstadoRequest request,
+            Authentication authentication) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .filter(encontrado -> !encontrado.isEliminado())
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+        validarNoEsCuentaPropia(usuario, authentication, "No puedes cambiar el estado de tu propia cuenta");
+
+        usuario.setActivo(request.getActivo());
+        return UsuarioResponse.fromEntity(usuarioRepository.save(usuario));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id, Authentication authentication) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .filter(encontrado -> !encontrado.isEliminado())
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+        validarNoEsCuentaPropia(usuario, authentication, "No puedes eliminar tu propia cuenta");
+
+        usuario.setActivo(false);
+        usuario.setEliminado(true);
+        usuarioRepository.save(usuario);
+        return ResponseEntity.noContent().build();
+    }
+
+    private void validarNoEsCuentaPropia(Usuario usuario, Authentication authentication, String mensaje) {
+        if (usuario.getCorreo().equalsIgnoreCase(authentication.getName())) {
+            throw new BadRequestException(mensaje);
+        }
     }
 }

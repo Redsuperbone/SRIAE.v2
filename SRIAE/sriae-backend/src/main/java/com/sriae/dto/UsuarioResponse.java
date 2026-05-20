@@ -11,6 +11,7 @@ public class UsuarioResponse {
     private String correo;
     private String telefono;
     private String tipoUsuario;
+    private boolean activo;
 
     public static UsuarioResponse fromEntity(Usuario usuario) {
         UsuarioResponse response = new UsuarioResponse();
@@ -20,6 +21,7 @@ public class UsuarioResponse {
         response.correo = usuario.getCorreo();
         response.telefono = usuario.getTelefono();
         response.tipoUsuario = RoleUtils.normalizeRole(usuario.getTipoUsuario());
+        response.activo = usuario.isActivo();
         return response;
     }
 
@@ -29,4 +31,5 @@ public class UsuarioResponse {
     public String getCorreo() { return correo; }
     public String getTelefono() { return telefono; }
     public String getTipoUsuario() { return tipoUsuario; }
+    public boolean isActivo() { return activo; }
 }

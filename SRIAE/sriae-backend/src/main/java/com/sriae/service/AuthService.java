@@ -47,6 +47,10 @@ public class AuthService {
         Usuario usuario = usuarioRepository.findByCorreo(request.getCorreoElectronico())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
+        if (usuario.isEliminado() || !usuario.isActivo()) {
+            throw new BadRequestException("La cuenta esta desactivada. Contacta al administrador");
+        }
+
         if (!passwordEncoder.matches(request.getContrasena(), usuario.getContrasena())) {
             throw new BadRequestException("Contrasena incorrecta");
         }
@@ -89,6 +93,10 @@ public class AuthService {
         RecuperacionPendiente pendiente = transactionTemplate.execute(status -> {
             Usuario usuario = usuarioRepository.findByCorreo(request.getCorreoElectronico())
                     .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+            if (usuario.isEliminado() || !usuario.isActivo()) {
+                throw new BadRequestException("La cuenta esta desactivada. Contacta al administrador");
+            }
 
             recuperacionTokenRepository.deleteByFechaExpiracionBefore(LocalDateTime.now());
             recuperacionTokenRepository.deleteByUsuarioAndUsadoFalse(usuario);

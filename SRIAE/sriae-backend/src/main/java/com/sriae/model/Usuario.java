@@ -42,6 +42,12 @@ public class Usuario {
     @Column(name = "foto_ruta")
     private String fotoRuta;
 
+    @Column(name = "activo")
+    private Boolean activo = true;
+
+    @Column(name = "eliminado")
+    private Boolean eliminado = false;
+
     @PrePersist
     protected void onCreate() {
         this.fechaCreacion = LocalDateTime.now();
@@ -75,4 +81,12 @@ public class Usuario {
 
     public String getFotoRuta() { return fotoRuta; }
     public void setFotoRuta(String fotoRuta) { this.fotoRuta = fotoRuta; }
+
+    public Boolean getActivo() { return activo; }
+    public void setActivo(Boolean activo) { this.activo = activo; }
+    public boolean isActivo() { return activo == null || activo; }
+
+    public Boolean getEliminado() { return eliminado; }
+    public void setEliminado(Boolean eliminado) { this.eliminado = eliminado; }
+    public boolean isEliminado() { return eliminado != null && eliminado; }
 }
