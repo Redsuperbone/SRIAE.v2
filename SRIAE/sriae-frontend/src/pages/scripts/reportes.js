@@ -91,7 +91,7 @@ async function renderTabla(incidentes) {
 
 function calcularEstadisticas(incidentes) {
   return {
-    porArea: contarPor(incidentes, (incidente) => incidente.ubicacion || 'Sin area'),
+    porGravedad: contarPor(incidentes, (incidente) => incidente.nivelAlerta || 'Sin gravedad'),
     porMes: contarPor(incidentes, (incidente) => {
       if (!incidente.fechaIncidente) return 'Sin fecha';
       const date = new Date(incidente.fechaIncidente);
@@ -231,8 +231,8 @@ function renderGraficas(estadisticas) {
   if (ctx1) {
     chartAreasInstance?.destroy();
     window.Chart.getChart(ctx1.canvas)?.destroy();
-    const labels = Object.keys(estadisticas.porArea || {});
-    const data = Object.values(estadisticas.porArea || {});
+    const labels = Object.keys(estadisticas.porGravedad || {});
+    const data = Object.values(estadisticas.porGravedad || {});
     chartAreasInstance = new Chart(ctx1, {
       type: 'doughnut',
       data: { labels, datasets: [{ data, backgroundColor: [bluePrimary, '#3b82f6', '#10b981', '#f59e0b'] }] },
