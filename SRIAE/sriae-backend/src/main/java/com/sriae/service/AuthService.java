@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,6 +38,8 @@ public class AuthService {
     private RecuperacionContrasenaTokenRepository recuperacionTokenRepository;
     @Autowired
     private CorreoRecuperacionService correoRecuperacionService;
+    @Autowired
+    private TransactionTemplate transactionTemplate;
 
     private static final int MINUTOS_VIGENCIA_RECUPERACION = 30;
 
@@ -82,23 +85,30 @@ public class AuthService {
         return guardado;
     }
 
-    @Transactional
     public void solicitarRecuperacion(RecuperacionContrasenaRequest request) {
-        Usuario usuario = usuarioRepository.findByCorreo(request.getCorreoElectronico())
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+        RecuperacionPendiente pendiente = transactionTemplate.execute(status -> {
+            Usuario usuario = usuarioRepository.findByCorreo(request.getCorreoElectronico())
+                    .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
-        recuperacionTokenRepository.deleteByFechaExpiracionBefore(LocalDateTime.now());
-        recuperacionTokenRepository.deleteByUsuarioAndUsadoFalse(usuario);
+            recuperacionTokenRepository.deleteByFechaExpiracionBefore(LocalDateTime.now());
+            recuperacionTokenRepository.deleteByUsuarioAndUsadoFalse(usuario);
 
-        RecuperacionContrasenaToken token = new RecuperacionContrasenaToken();
-        token.setUsuario(usuario);
-        token.setToken(UUID.randomUUID().toString().replace("-", "") + UUID.randomUUID().toString().replace("-", ""));
-        token.setFechaExpiracion(LocalDateTime.now().plusMinutes(MINUTOS_VIGENCIA_RECUPERACION));
-        token.setUsado(false);
-        recuperacionTokenRepository.save(token);
+            RecuperacionContrasenaToken token = new RecuperacionContrasenaToken();
+            token.setUsuario(usuario);
+            token.setToken(UUID.randomUUID().toString().replace("-", "") + UUID.randomUUID().toString().replace("-", ""));
+            token.setFechaExpiracion(LocalDateTime.now().plusMinutes(MINUTOS_VIGENCIA_RECUPERACION));
+            token.setUsado(false);
+            recuperacionTokenRepository.save(token);
 
-        correoRecuperacionService.enviarEnlace(usuario, token.getToken(), MINUTOS_VIGENCIA_RECUPERACION);
-        auditoriaService.registrar(usuario.getCorreo(), "SOLICITO_RECUPERACION_CONTRASENA", "Correo de recuperacion enviado");
+            auditoriaService.registrar(usuario.getCorreo(), "SOLICITO_RECUPERACION_CONTRASENA", "Token de recuperacion generado");
+            return new RecuperacionPendiente(usuario.getCorreo(), usuario.getNombreCompleto(), token.getToken());
+        });
+
+        correoRecuperacionService.enviarEnlace(
+                pendiente.correo(),
+                pendiente.nombreCompleto(),
+                pendiente.token(),
+                MINUTOS_VIGENCIA_RECUPERACION);
     }
 
     @Transactional
@@ -119,5 +129,8 @@ public class AuthService {
         token.setUsado(true);
         recuperacionTokenRepository.save(token);
         auditoriaService.registrar(usuario.getCorreo(), "RESTABLECIO_CONTRASENA", "Contrasena actualizada mediante recuperacion");
+    }
+
+    private record RecuperacionPendiente(String correo, String nombreCompleto, String token) {
     }
 }

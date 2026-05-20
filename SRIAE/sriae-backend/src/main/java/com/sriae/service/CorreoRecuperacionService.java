@@ -42,6 +42,10 @@ public class CorreoRecuperacionService {
     }
 
     public void enviarEnlace(Usuario usuario, String token, int minutosVigencia) {
+        enviarEnlace(usuario.getCorreo(), usuario.getNombreCompleto(), token, minutosVigencia);
+    }
+
+    public void enviarEnlace(String correo, String nombreCompleto, String token, int minutosVigencia) {
         if (!enabled) {
             logger.warn("Correo de recuperacion desactivado. Define SRIAE_EMAIL_ENABLED=true.");
             throw new BadRequestException("El envio de correos no esta configurado");
@@ -57,28 +61,32 @@ public class CorreoRecuperacionService {
         if (from != null && !from.isBlank()) {
             message.setFrom(from);
         }
-        message.setTo(usuario.getCorreo());
+        message.setTo(correo);
         message.setSubject("Recuperacion de contrasena SRIAE");
-        message.setText(construirMensaje(usuario, token, minutosVigencia));
+        message.setText(construirMensaje(nombreCompleto, token, minutosVigencia));
 
         try {
             mailSender.send(message);
         } catch (MailException error) {
             logger.warn("No fue posible enviar el correo de recuperacion a {}: {}",
-                    usuario.getCorreo(),
+                    correo,
                     error.getMessage());
             throw new BadRequestException("No fue posible enviar el correo de recuperacion");
         }
     }
 
     private String construirMensaje(Usuario usuario, String token, int minutosVigencia) {
+        return construirMensaje(usuario.getNombreCompleto(), token, minutosVigencia);
+    }
+
+    private String construirMensaje(String nombreCompleto, String token, int minutosVigencia) {
         String base = frontendBaseUrl.endsWith("/")
                 ? frontendBaseUrl.substring(0, frontendBaseUrl.length() - 1)
                 : frontendBaseUrl;
         String enlace = base + "/recuperar.html?token=" + token;
-        String nombre = usuario.getNombreCompleto() == null || usuario.getNombreCompleto().isBlank()
+        String nombre = nombreCompleto == null || nombreCompleto.isBlank()
                 ? "usuario"
-                : usuario.getNombreCompleto();
+                : nombreCompleto;
 
         return """
                 Hola %s:
