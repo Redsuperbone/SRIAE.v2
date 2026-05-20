@@ -83,6 +83,8 @@ public class AuthService {
         usuario.setTelefono(request.getTelefono());
         usuario.setTipoUsuario(rol);
         usuario.setContrasena(passwordEncoder.encode(request.getContrasena()));
+        usuario.setActivo(true);
+        usuario.setEliminado(false);
 
         Usuario guardado = usuarioRepository.save(usuario);
         auditoriaService.registrar(guardado.getCorreo(), "REGISTRO_USUARIO", "Rol: " + guardado.getTipoUsuario());

@@ -14,26 +14,29 @@ function render(users) {
     return;
   }
 
-  tbody.innerHTML = users.map((u) => `
-    <tr>
-      <td>${u.idUsuario}</td>
-      <td><strong>${u.nombreCompleto || ''} ${u.apellidoCompleto || ''}</strong></td>
-      <td>${u.correo || ''}</td>
-      <td>${u.telefono || ''}</td>
-      <td><span class="badge-soft">${u.tipoUsuario || ''}</span></td>
-      <td><span class="badge-soft ${u.activo ? 'badge-success' : 'badge-warning'}">${u.activo ? 'Activo' : 'Inactivo'}</span></td>
-      <td>
-        <div class="inline-actions">
-          <button class="btn-admin ${u.activo ? 'btn-muted-admin' : 'btn-secondary-admin'}" type="button" data-toggle-status="${u.idUsuario}" data-active="${u.activo ? 'false' : 'true'}">
-            <i class="fas ${u.activo ? 'fa-user-slash' : 'fa-user-check'}"></i> ${u.activo ? 'Desactivar' : 'Activar'}
-          </button>
-          <button class="btn-admin btn-danger-admin" type="button" data-delete="${u.idUsuario}">
-            <i class="fas fa-trash"></i> Eliminar
-          </button>
-        </div>
-      </td>
-    </tr>
-  `).join('');
+  tbody.innerHTML = users.map((u) => {
+    const activo = u.activo !== false;
+    return `
+      <tr>
+        <td>${u.idUsuario}</td>
+        <td><strong>${u.nombreCompleto || ''} ${u.apellidoCompleto || ''}</strong></td>
+        <td>${u.correo || ''}</td>
+        <td>${u.telefono || ''}</td>
+        <td><span class="badge-soft">${u.tipoUsuario || ''}</span></td>
+        <td><span class="badge-soft ${activo ? 'badge-success' : 'badge-warning'}">${activo ? 'Activo' : 'Inactivo'}</span></td>
+        <td>
+          <div class="inline-actions">
+            <button class="btn-admin ${activo ? 'btn-muted-admin' : 'btn-secondary-admin'}" type="button" data-toggle-status="${u.idUsuario}" data-active="${activo ? 'false' : 'true'}">
+              <i class="fas ${activo ? 'fa-user-slash' : 'fa-user-check'}"></i> ${activo ? 'Desactivar' : 'Activar'}
+            </button>
+            <button class="btn-admin btn-danger-admin" type="button" data-delete="${u.idUsuario}">
+              <i class="fas fa-trash"></i> Eliminar
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
 }
 
 async function loadUsers() {

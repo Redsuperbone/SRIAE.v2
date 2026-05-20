@@ -51,6 +51,12 @@ public class Usuario {
     @PrePersist
     protected void onCreate() {
         this.fechaCreacion = LocalDateTime.now();
+        if (this.activo == null) {
+            this.activo = true;
+        }
+        if (this.eliminado == null) {
+            this.eliminado = false;
+        }
     }
 
     // ===== GETTERS Y SETTERS =====

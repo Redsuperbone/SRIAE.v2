@@ -31,5 +31,5 @@ public class UsuarioResponse {
     public String getCorreo() { return correo; }
     public String getTelefono() { return telefono; }
     public String getTipoUsuario() { return tipoUsuario; }
-    public boolean isActivo() { return activo; }
+    public boolean getActivo() { return activo; }
 }
