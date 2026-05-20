@@ -47,6 +47,7 @@ public class IncidenteService {
         this.notificacionService = notificacionService;
     }
 
+    @Transactional(readOnly = true)
     public List<IncidenteResponse> listar(String correoUsuario, Integer matricula, String tipo, LocalDate desde, LocalDate hasta) {
         Usuario usuario = obtenerUsuario(correoUsuario);
         String rol = RoleUtils.normalizeRole(usuario.getTipoUsuario());
@@ -115,6 +116,7 @@ public class IncidenteService {
         return IncidenteResponse.fromEntity(guardado);
     }
 
+    @Transactional
     public IncidenteResponse actualizarEstado(Integer id, String nuevoEstado, String correoUsuario) {
         Incidente incidente = obtenerIncidente(id);
         incidente.setEstado(nuevoEstado);
@@ -123,6 +125,7 @@ public class IncidenteService {
         return IncidenteResponse.fromEntity(guardado);
     }
 
+    @Transactional
     public void eliminar(Integer id, String correoUsuario) {
         Incidente incidente = obtenerIncidente(id);
 
