@@ -1,11 +1,13 @@
 import { API_BASE_URL } from '../../services/config.js';
-import { apiGet } from '../../services/apiClient.js';
-import { getToken } from '../../services/session.js';
+import { apiGet, apiRequest } from '../../services/apiClient.js';
+import { getRole, getToken } from '../../services/session.js';
 import { renderProtectedImages } from '../../services/media.js';
 import { alertError, formatDateTime } from '../../utils/dom.js';
 
 let chartAreasInstance = null;
 let chartMensualInstance = null;
+const EDIT_ROLES = new Set(['ADMIN', 'DOCENTE', 'ENFERMERA']);
+const ESTADOS = ['PENDIENTE', 'EN_PROCESO', 'CERRADA'];
 
 async function cargarReportes() {
   const [estadisticas, incidentes] = await Promise.all([
@@ -21,17 +23,46 @@ async function renderTabla(incidentes) {
   const tbody = document.querySelector('.main-table tbody');
   if (!tbody) return;
   tbody.innerHTML = incidentes.map((incidente) => `
-    <tr>
+    <tr data-incidente-id="${incidente.idIncidente}">
       <td>${formatDateTime(incidente.fechaIncidente)}</td>
       <td>${incidente.nombreEstudiante || ''}</td>
       <td>${incidente.tipo || incidente.titulo || ''}</td>
       <td>${incidente.ubicacion || ''}</td>
       <td><span class="badge-status bg-red"><i class="fas fa-circle"></i> ${incidente.nivelAlerta || ''}</span></td>
       <td>${incidente.fotoRuta ? `<img class="report-photo-thumb" data-protected-src="${incidente.fotoRuta}" alt="Foto del incidente" hidden>` : '<span class="muted-cell">Sin foto</span>'}</td>
-      <td><a href="#" class="action-pdf" data-export><i class="fas fa-download"></i> CSV</a></td>
+      <td>${renderAccionEstado(incidente)}</td>
     </tr>
   `).join('');
   await renderProtectedImages(tbody);
+}
+
+function renderAccionEstado(incidente) {
+  const estado = incidente.estado || 'PENDIENTE';
+  if (!EDIT_ROLES.has(getRole())) {
+    return `<span class="status-pill">${labelEstado(estado)}</span>`;
+  }
+
+  const options = ESTADOS.map((item) => (
+    `<option value="${item}" ${item === estado ? 'selected' : ''}>${labelEstado(item)}</option>`
+  )).join('');
+
+  return `
+    <label class="status-control">
+      <span>Estado</span>
+      <select data-status-select data-current="${estado}">
+        ${options}
+      </select>
+    </label>
+  `;
+}
+
+function labelEstado(estado) {
+  const labels = {
+    PENDIENTE: 'Pendiente',
+    EN_PROCESO: 'En proceso',
+    CERRADA: 'Cerrada'
+  };
+  return labels[estado] || estado;
 }
 
 function renderGraficas(estadisticas) {
@@ -88,6 +119,31 @@ document.addEventListener('click', (event) => {
   if (event.target.closest('[data-export]')) {
     event.preventDefault();
     descargarCsv();
+  }
+});
+
+document.addEventListener('change', async (event) => {
+  const select = event.target.closest('[data-status-select]');
+  if (!select) return;
+
+  const row = select.closest('[data-incidente-id]');
+  const id = row?.dataset.incidenteId;
+  const nuevoEstado = select.value;
+  const estadoAnterior = select.dataset.current || 'PENDIENTE';
+  if (!id || nuevoEstado === estadoAnterior) return;
+
+  select.disabled = true;
+  try {
+    await apiRequest(`/incidentes/${id}/estado?nuevoEstado=${encodeURIComponent(nuevoEstado)}`, {
+      method: 'PATCH'
+    });
+    select.dataset.current = nuevoEstado;
+    await cargarReportes();
+  } catch (error) {
+    select.value = estadoAnterior;
+    alertError(error);
+  } finally {
+    select.disabled = false;
   }
 });
 
