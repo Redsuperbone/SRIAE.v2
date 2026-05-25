@@ -254,4 +254,14 @@ document.getElementById('editStudentFromProfile')?.addEventListener('click', () 
   window.location.href = `gestion-estudiantes.html?matricula=${encodeURIComponent(estudianteActual.matricula)}&editar=1`;
 });
 
+document.getElementById('manageTutorFromProfile')?.addEventListener('click', () => {
+  if (!estudianteActual?.matricula) {
+    alertError(new Error('Selecciona un estudiante para gestionar sus tutores.'));
+    return;
+  }
+
+  localStorage.setItem('sriae_estudiante_actual', JSON.stringify(estudianteActual));
+  window.location.href = 'gestionar-tutor.html';
+});
+
 cargarEstudiantes().catch(alertError);

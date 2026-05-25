@@ -77,9 +77,13 @@ async function loadInitialData() {
   renderStudents();
   renderAvailableTutors();
 
-  if (students.length) {
-    studentSelect.value = String(students[0].matricula);
-    await selectStudent(students[0].matricula);
+  const stored = JSON.parse(localStorage.getItem('sriae_estudiante_actual') || 'null');
+  const storedMatricula = stored?.matricula;
+  const hasStoredStudent = storedMatricula && students.some((student) => String(student.matricula) === String(storedMatricula));
+
+  if (hasStoredStudent) {
+    studentSelect.value = String(storedMatricula);
+    await selectStudent(storedMatricula);
   } else {
     renderStudentHeader(null);
     renderLinkedTutors([]);
