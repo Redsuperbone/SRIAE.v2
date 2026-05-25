@@ -56,7 +56,7 @@ function render() {
 async function loadStudents() {
   const select = document.getElementById('matriculaEstudiante');
   const students = await apiGet('/estudiantes');
-  select.innerHTML = '<option value="">Selecciona alumno</option>' + students.map((s) => `<option value="${s.matricula}">${s.nombre} ${s.apellidos} - ${s.matricula}</option>`).join('');
+  select.innerHTML = '<option value="">Selecciona estudiante</option>' + students.map((s) => `<option value="${s.matricula}">${s.nombre} ${s.apellidos} - ${s.matricula}</option>`).join('');
 }
 
 async function loadRecords() {

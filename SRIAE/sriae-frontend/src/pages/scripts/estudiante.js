@@ -78,12 +78,12 @@ function filtrarEstudiantes() {
 function llenarAlumnos(data) {
   if (!selectAlumno) return;
 
-  selectAlumno.innerHTML = '<option value="">Selecciona alumno</option>' + data.map((estudiante) => (
+  selectAlumno.innerHTML = '<option value="">Selecciona estudiante</option>' + data.map((estudiante) => (
     `<option value="${estudiante.matricula}">${nombreCompleto(estudiante)} - ${estudiante.matricula}</option>`
   )).join('');
 
   if (!data.length) {
-    limpiarPerfil('No se encontraron alumnos con esos filtros.');
+    limpiarPerfil('No se encontraron estudiantes con esos filtros.');
     return;
   }
 
@@ -97,13 +97,13 @@ async function cargarEstudiantes() {
   llenarAlumnos(estudiantesFiltrados);
 
   if (!estudiantes.length) {
-    limpiarPerfil('No hay alumnos disponibles para tu usuario.');
+    limpiarPerfil('No hay estudiantes disponibles para tu usuario.');
   }
 }
 
 async function seleccionarEstudiante(matricula) {
   if (!matricula) {
-    limpiarPerfil('Selecciona un alumno para consultar su informacion.');
+    limpiarPerfil('Selecciona un estudiante para consultar su informacion.');
     return;
   }
 
@@ -180,7 +180,7 @@ async function cargarIncidentes(matricula) {
           ${incidente.fotoRuta ? `<button class="incident-photo-link" data-photo="${incidente.fotoRuta}" type="button"><i class="far fa-image"></i> Ver foto</button><img class="incident-photo" data-protected-src="${incidente.fotoRuta}" alt="Foto del incidente" hidden>` : ''}
         </div>
       </div>
-    `).join('') : '<p>No hay incidentes registrados para este alumno.</p>';
+    `).join('') : '<p>No hay incidentes registrados para este estudiante.</p>';
     await renderProtectedImages(timeline);
   } catch (error) {
     timeline.innerHTML = '<p>No se pudo cargar el historial de incidentes.</p>';

@@ -21,7 +21,7 @@ public class IncidenteRequest {
     @NotBlank(message = "El nivel de alerta es obligatorio")
     private String nivelAlerta;
 
-    @NotNull(message = "La matricula del alumno es obligatoria")
+    @NotNull(message = "La matricula del estudiante es obligatoria")
     private Integer matriculaEstudiante;
 
     private LocalDateTime fechaIncidente;

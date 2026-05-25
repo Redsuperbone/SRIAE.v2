@@ -75,25 +75,25 @@ function updateSearchStatus(count) {
   if (!studentSearchStatus) return;
   const hasFilters = Boolean(searchInput?.value.trim() || selectGrado?.value || selectGrupo?.value);
   if (!estudiantes.length) {
-    studentSearchStatus.textContent = 'No hay alumnos disponibles para tu usuario.';
+    studentSearchStatus.textContent = 'No hay estudiantes disponibles para tu usuario.';
     return;
   }
   if (!hasFilters) {
-    studentSearchStatus.textContent = `${count} alumnos disponibles.`;
+    studentSearchStatus.textContent = `${count} estudiantes disponibles.`;
     return;
   }
   studentSearchStatus.textContent = count === 1
-    ? '1 alumno encontrado.'
-    : `${count} alumnos encontrados.`;
+    ? '1 estudiante encontrado.'
+    : `${count} estudiantes encontrados.`;
 }
 
 function actualizarSelectAlumnos(data = estudiantesFiltrados(), options = {}) {
   if (!selectAlumno) return;
   selectAlumno.innerHTML = data.length
-    ? '<option value="">Selecciona alumno</option>' + data.map((e) => (
+    ? '<option value="">Selecciona estudiante</option>' + data.map((e) => (
       `<option value="${e.matricula}">${nombreEstudiante(e)} - ${e.matricula}</option>`
     )).join('')
-    : '<option value="">Sin alumnos disponibles</option>';
+    : '<option value="">Sin estudiantes disponibles</option>';
   updateSearchStatus(data.length);
   limpiarHistorialMedico();
 
@@ -136,7 +136,7 @@ function renderMedicalItems(record) {
   `).join('');
 }
 
-function limpiarHistorialMedico(message = 'Selecciona un alumno para consultar su informacion medica.') {
+function limpiarHistorialMedico(message = 'Selecciona un estudiante para consultar su informacion medica.') {
   medicalPreview?.classList.remove('medical-alert');
   if (medicalPreviewStatus) medicalPreviewStatus.textContent = message;
   if (medicalBloodType) medicalBloodType.textContent = 'N/D';
@@ -157,7 +157,7 @@ async function cargarHistorialMedico(matricula) {
     const latest = records[0];
 
     if (!latest) {
-      limpiarHistorialMedico('Este alumno no tiene registros medicos capturados.');
+      limpiarHistorialMedico('Este estudiante no tiene registros medicos capturados.');
       return;
     }
 
@@ -171,7 +171,7 @@ async function cargarHistorialMedico(matricula) {
     if (medicalBloodType) medicalBloodType.textContent = latest.tipoSangre || 'N/D';
     renderMedicalItems(latest);
   } catch (error) {
-    limpiarHistorialMedico('No fue posible consultar el registro medico para este alumno.');
+    limpiarHistorialMedico('No fue posible consultar el registro medico para este estudiante.');
   }
 }
 
@@ -241,7 +241,7 @@ async function registrarIncidente() {
   const file = selectedFile();
 
   if (!payload.matriculaEstudiante) {
-    throw new Error('Selecciona un alumno.');
+    throw new Error('Selecciona un estudiante.');
   }
 
   if (file) {
@@ -313,7 +313,7 @@ function renderTutorContactActions(incidente) {
     container.innerHTML = `
       <div class="tutor-contact-title">
         <strong>Contactar tutor</strong>
-        <span>El incidente se registro, pero este alumno no tiene tutores vinculados.</span>
+        <span>El incidente se registro, pero este estudiante no tiene tutores vinculados.</span>
       </div>
     `;
     return;

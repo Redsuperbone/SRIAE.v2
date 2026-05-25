@@ -46,7 +46,7 @@
 </nav>
 <main class="admin-shell">
   <header class="admin-header">
-    <div class="admin-title"><h1>Historial medico</h1><p>Registro cronologico de informacion medica basica por alumno.</p></div>
+    <div class="admin-title"><h1>Historial medico</h1><p>Registro cronologico de informacion medica basica por estudiante.</p></div>
     <div class="admin-actions"><button class="btn-admin btn-secondary-admin" id="exportMedical"><i class="fas fa-file-csv"></i> Exportar CSV</button></div>
   </header>
   <section class="admin-grid">
@@ -54,7 +54,7 @@
       <h2>Registro medico</h2>
       <input type="hidden" id="idHistorial">
       <div class="form-grid">
-        <div class="field full"><label>Alumno</label><select id="matriculaEstudiante" required></select></div>
+        <div class="field full"><label>Estudiante</label><select id="matriculaEstudiante" required></select></div>
         <div class="field"><label>Tipo de sangre</label><input id="tipoSangre" placeholder="O+"></div>
         <div class="field"><label>Alergias</label><input id="alergiasMedicas"></div>
         <div class="field full"><label>Enfermedades cronicas</label><textarea id="enfermedadesCronicas"></textarea></div>
@@ -65,7 +65,7 @@
     </form>
     <section class="admin-card">
       <h2>Registros medicos</h2>
-      <div class="table-wrap"><table class="admin-table"><thead><tr><th>Fecha</th><th>Alumno</th><th>Sangre</th><th>Alergias</th><th>Acciones</th></tr></thead><tbody id="medicalTable"></tbody></table></div>
+      <div class="table-wrap"><table class="admin-table"><thead><tr><th>Fecha</th><th>Estudiante</th><th>Sangre</th><th>Alergias</th><th>Acciones</th></tr></thead><tbody id="medicalTable"></tbody></table></div>
     </section>
   </section>
 </main>

@@ -236,7 +236,7 @@
         <section class="form-section mt-40">
             <div class="section-divider">
                 <div class="icon-circle-small"><i class="far fa-user"></i></div>
-                <h2>DATOS DEL ALUMNO</h2>
+                <h2>DATOS DEL ESTUDIANTE</h2>
                 <hr>
             </div>
 
@@ -244,7 +244,7 @@
                 <i class="fas fa-search"></i>
                 <input type="text" id="buscar-estudiante" placeholder="Buscar por nombre, matricula, grado o grupo...">
             </div>
-            <p class="student-search-status" id="studentSearchStatus">Cargando alumnos...</p>
+            <p class="student-search-status" id="studentSearchStatus">Cargando estudiantes...</p>
 
             <div class="student-mini-card">
                 <!-- Grado -->
@@ -252,7 +252,7 @@
                     <div class="icon-blue"><i class="fas fa-graduation-cap"></i></div>
                     <div class="mini-text">
                         <small>Grado</small>
-                        <select class="select-invisible" id="select-grado" onchange="cargarAlumnos()">
+                        <select class="select-invisible" id="select-grado" onchange="cargarEstudiantes()">
                             <option value="">Grado</option>
                         </select>
                     </div>
@@ -263,19 +263,19 @@
                     <div class="icon-blue"><i class="fas fa-users"></i></div>
                     <div class="mini-text">
                         <small>Grupo</small>
-                        <select class="select-invisible" id="select-grupo" onchange="cargarAlumnos()">
+                        <select class="select-invisible" id="select-grupo" onchange="cargarEstudiantes()">
                             <option value="">Grupo</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- Alumno -->
+                <!-- Estudiante -->
                 <div class="mini-info">
                     <div class="icon-blue"><i class="fas fa-user"></i></div>
                     <div class="mini-text">
-                        <small>Alumno</small>
+                        <small>Estudiante</small>
                         <select class="select-invisible" id="select-alumno">
-                            <option value="">Cargando alumnos...</option>
+                            <option value="">Cargando estudiantes...</option>
                         </select>
                     </div>
                 </div>
@@ -284,27 +284,27 @@
             <div class="medical-preview" id="medicalPreview">
                 <div class="medical-preview-header">
                     <div>
-                        <h3>Registro medico del alumno</h3>
-                        <p id="medicalPreviewStatus">Selecciona un alumno para consultar su informacion medica.</p>
+                        <h3>Registro medico del estudiante</h3>
+                        <p id="medicalPreviewStatus">Selecciona un estudiante para consultar su informacion medica.</p>
                     </div>
                     <span class="medical-badge" id="medicalBloodType">N/D</span>
                 </div>
                 <div class="medical-grid" id="medicalPreviewGrid">
                     <div class="medical-item">
                         <small>Alergias</small>
-                        <strong>Sin alumno seleccionado</strong>
+                        <strong>Sin estudiante seleccionado</strong>
                     </div>
                     <div class="medical-item">
                         <small>Enfermedades cronicas</small>
-                        <strong>Sin alumno seleccionado</strong>
+                        <strong>Sin estudiante seleccionado</strong>
                     </div>
                     <div class="medical-item">
                         <small>Medicamentos</small>
-                        <strong>Sin alumno seleccionado</strong>
+                        <strong>Sin estudiante seleccionado</strong>
                     </div>
                     <div class="medical-item">
                         <small>Observaciones</small>
-                        <strong>Sin alumno seleccionado</strong>
+                        <strong>Sin estudiante seleccionado</strong>
                     </div>
                 </div>
             </div>
@@ -332,11 +332,11 @@
 
             // Validación: Si el valor es vacío, mandamos una alerta y detenemos la función
             if (selectIncidente.value === "" || selectAlumno.value === "") {
-                alert("Por favor, selecciona el tipo de incidente y el alumno antes de continuar.");
+                alert("Por favor, selecciona el tipo de incidente y el estudiante antes de continuar.");
                 return; // Esto evita que el modal se abra
             }
 
-        const alumno = document.getElementById('select-alumno').options[document.getElementById('select-alumno').selectedIndex].text;
+        const estudiante = document.getElementById('select-alumno').options[document.getElementById('select-alumno').selectedIndex].text;
         const incidente = document.getElementById('tipo-incidente').options[document.getElementById('tipo-incidente').selectedIndex].text;
         const gravedad = document.getElementById('select-gravedad').value;
         const fecha = document.getElementById('fecha-incidente').value;
@@ -344,7 +344,7 @@
         const lugar = document.getElementById('lugar-incidente').value;
 
         // 2. Llenar el resumen del modal
-        document.getElementById('res-alumno').innerText = alumno;
+        document.getElementById('res-alumno').innerText = estudiante;
         document.getElementById('res-incidente').innerText = incidente;
         document.getElementById('res-fechahora').innerText = `${fecha} a las ${hora}`;
         document.getElementById('res-lugar').innerText = lugar || "No especificado";
@@ -401,7 +401,7 @@ function vaciarCampos() {
     document.getElementById('select-gravedad').value = "alta"; // O tu valor por defecto
     document.querySelector('textarea').value = "";
     
-    // Reiniciar datos del alumno (Volver al estado inicial)
+    // Reiniciar datos del estudiante (Volver al estado inicial)
     document.getElementById('select-grado').selectedIndex = 0;
     document.getElementById('select-grupo').selectedIndex = 0;
     document.getElementById('select-alumno').innerHTML = '<option value="" disabled selected>Primero elige grado y grupo</option>';
@@ -433,32 +433,32 @@ function establecerFechaHoraActual() {
     document.getElementById('hora-incidente').value = `${horas}:${minutos}`;
 }
 
-    function cargarAlumnos() {
+    function cargarEstudiantes() {
     const grado = document.getElementById('select-grado').value;
     const grupo = document.getElementById('select-grupo').value;
     const selectAlumno = document.getElementById('select-alumno');
 
     // Solo disparamos la búsqueda si ambos campos tienen valor
     if (grado && grupo) {
-        selectAlumno.innerHTML = '<option value="">Cargando alumnos...</option>';
+        selectAlumno.innerHTML = '<option value="">Cargando estudiantes...</option>';
 
         // Aquí es donde harías tu fetch al backend, algo como:
         /*
-        fetch(`tu_api/alumnos?grado=${grado}&grupo=${grupo}`)
+        fetch(`tu_api/estudiantes?grado=${grado}&grupo=${grupo}`)
             .then(response => response.json())
             .then(data => {
-                selectAlumno.innerHTML = '<option value="" disabled selected>Selecciona un alumno</option>';
-                data.forEach(alumno => {
+                selectAlumno.innerHTML = '<option value="" disabled selected>Selecciona un estudiante</option>';
+                data.forEach(estudiante => {
                     let option = document.createElement('option');
-                    option.value = alumno.id;
-                    option.text = alumno.nombre_completo;
+                    option.value = estudiante.id;
+                    option.text = estudiante.nombre_completo;
                     selectAlumno.add(option);
                 });
             });
         */
         
         // Simulación temporal para que veas cómo se vería:
-        console.log(`Buscando alumnos de ${grado}° ${grupo}...`);
+        console.log(`Buscando estudiantes de ${grado}° ${grupo}...`);
     }
 }
     function sugerirGravedad() {
@@ -554,7 +554,7 @@ function establecerFechaHoraActual() {
         <div class="modal-body">
             <p>Por favor, revisa que la información sea correcta antes de finalizar:</p>
             <ul class="resumen-lista">
-                <li><strong>Alumno:</strong> <span id="res-alumno"></span></li>
+                <li><strong>Estudiante:</strong> <span id="res-alumno"></span></li>
                 <li><strong>Incidente:</strong> <span id="res-incidente"></span></li>
                 <li><strong>Gravedad:</strong> <span id="res-gravedad" class="badge-gravedad"></span></li>
                 <li><strong>Fecha y Hora:</strong> <span id="res-fechahora"></span></li>

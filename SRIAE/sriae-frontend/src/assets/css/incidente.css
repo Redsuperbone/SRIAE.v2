@@ -144,7 +144,7 @@ textarea { height: 120px; resize: none; }
 .gravedad-preventiva { background: #eff6ff; color: #1e40af; border-left-color: #3b82f6; }
 .gravedad-preventiva i { color: #3b82f6; font-size: 20px; }
 
-/* --- CORRECCIÓN DATOS ALUMNO --- */
+/* --- CORRECCIÓN DATOS ESTUDIANTE --- */
 .student-mini-card {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -689,7 +689,7 @@ textarea {
     .upload-area p {
         font-size: 13px;
     }
-/* Forzamos la tarjeta de alumno a ser un contenedor vertical */
+/* Forzamos la tarjeta de estudiante a ser un contenedor vertical */
     .student-mini-card {
         display: flex;
         flex-direction: column; /* Apila los elementos uno sobre otro */

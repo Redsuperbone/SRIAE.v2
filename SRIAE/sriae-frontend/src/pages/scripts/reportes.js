@@ -34,8 +34,8 @@ async function inicializarFiltros() {
   } catch (error) {
     estudiantes = [];
   }
-  renderSelectAlumnos(filterStudent, 'Todos los alumnos');
-  renderSelectAlumnos(document.getElementById('editStudent'), 'Selecciona alumno');
+  renderSelectAlumnos(filterStudent, 'Todos los estudiantes');
+  renderSelectAlumnos(document.getElementById('editStudent'), 'Selecciona estudiante');
 }
 
 function filtrosQuery() {

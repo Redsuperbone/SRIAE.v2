@@ -60,7 +60,7 @@ function renderAssociationSelects() {
 
   if (studentSelect) {
     const actual = studentSelect.value;
-    studentSelect.innerHTML = '<option value="">Selecciona alumno</option>' + students.map(optionEstudiante).join('');
+    studentSelect.innerHTML = '<option value="">Selecciona estudiante</option>' + students.map(optionEstudiante).join('');
     studentSelect.value = actual;
   }
 
@@ -150,7 +150,7 @@ document.getElementById('linkTutorBtn')?.addEventListener('click', async () => {
   if (!canManage()) return alert('Solo ADMIN puede vincular tutores.');
   const matricula = value('linkMatricula');
   const tutor = value('linkTutor');
-  if (!matricula || !tutor) return alert('Selecciona alumno y tutor.');
+  if (!matricula || !tutor) return alert('Selecciona estudiante y tutor.');
   await apiPost(`/estudiantes/${matricula}/tutores/${tutor}`, {});
   alert('Tutor vinculado correctamente.');
   await showTutors(matricula);
@@ -160,7 +160,7 @@ document.getElementById('linkDocenteBtn')?.addEventListener('click', async () =>
   if (!canManage()) return alert('Solo ADMIN puede vincular docentes.');
   const matricula = value('linkMatricula');
   const docente = value('linkDocente');
-  if (!matricula || !docente) return alert('Selecciona alumno y docente.');
+  if (!matricula || !docente) return alert('Selecciona estudiante y docente.');
   await apiPost(`/estudiantes/${matricula}/docentes/${docente}`, {});
   alert('Docente vinculado correctamente.');
   await showDocentes(matricula);
@@ -176,7 +176,7 @@ async function showTutors(matricula) {
 document.getElementById('viewTutorsBtn')?.addEventListener('click', async () => {
   if (!canManage()) return alert('Solo ADMIN puede consultar tutores desde esta pantalla.');
   const matricula = value('linkMatricula');
-  if (!matricula) return alert('Selecciona un alumno.');
+  if (!matricula) return alert('Selecciona un estudiante.');
   await showTutors(matricula);
 });
 
@@ -190,7 +190,7 @@ async function showDocentes(matricula) {
 document.getElementById('viewDocentesBtn')?.addEventListener('click', async () => {
   if (!canManage()) return alert('Solo ADMIN puede consultar docentes desde esta pantalla.');
   const matricula = value('linkMatricula');
-  if (!matricula) return alert('Selecciona un alumno.');
+  if (!matricula) return alert('Selecciona un estudiante.');
   await showDocentes(matricula);
 });
 

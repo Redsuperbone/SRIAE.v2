@@ -22,7 +22,7 @@ function userLabel(user) {
 
 function renderStudents() {
   if (!studentSelect) return;
-  studentSelect.innerHTML = '<option value="">Selecciona alumno</option>' + students
+  studentSelect.innerHTML = '<option value="">Selecciona estudiante</option>' + students
     .map((student) => `<option value="${student.matricula}">${studentLabel(student)}</option>`)
     .join('');
 }
@@ -36,7 +36,7 @@ function renderAvailableTutors() {
 
 function renderStudentHeader(student) {
   selectedStudent = student || null;
-  if (studentName) studentName.textContent = student ? `${student.nombre || ''} ${student.apellidos || ''}` : 'Selecciona un alumno';
+  if (studentName) studentName.textContent = student ? `${student.nombre || ''} ${student.apellidos || ''}` : 'Selecciona un estudiante';
   if (studentId) studentId.textContent = student ? `Matricula: ${student.matricula || ''}` : 'La informacion se carga desde el backend';
 }
 
@@ -49,7 +49,7 @@ function renderLinkedTutors(linkedTutors) {
         <p><i class="fas fa-users"></i> Tutor | <i class="fas fa-phone"></i> ${tutor.telefono || 'Sin telefono'} | ${tutor.correo || ''}</p>
       </div>
     </div>
-  `).join('') : '<p>No hay tutores vinculados a este alumno.</p>';
+  `).join('') : '<p>No hay tutores vinculados a este estudiante.</p>';
 }
 
 async function loadLinkedTutors(matricula) {
@@ -93,7 +93,7 @@ document.getElementById('linkTutorBtn')?.addEventListener('click', async () => {
   const idTutor = tutorSelect?.value;
 
   if (!matricula || !idTutor) {
-    alert('Selecciona alumno y tutor.');
+    alert('Selecciona estudiante y tutor.');
     return;
   }
 
