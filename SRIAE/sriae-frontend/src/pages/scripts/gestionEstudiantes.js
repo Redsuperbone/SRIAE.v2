@@ -160,7 +160,7 @@ tbody?.addEventListener('click', async (event) => {
   }
   if (profile) {
     const student = students.find((item) => String(item.matricula) === String(profile));
-    if (student) localStorage.setItem('sriae_estudiante_actual', JSON.stringify(student));
+    if (student) sessionStorage.setItem('sriae_estudiante_perfil', JSON.stringify(student));
     window.location.href = 'estudiante.html';
   }
   if (del && canManage() && confirm('¿Eliminar este estudiante?')) {

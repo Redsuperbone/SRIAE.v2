@@ -102,10 +102,22 @@ async function cargarEstudiantes() {
   estudiantesFiltrados = [...estudiantes];
   llenarFiltros();
   llenarAlumnos(estudiantesFiltrados);
+  await seleccionarEstudianteDesdeNavegacion();
 
   if (!estudiantes.length) {
     limpiarPerfil('No hay estudiantes disponibles para tu usuario.');
   }
+}
+
+async function seleccionarEstudianteDesdeNavegacion() {
+  const stored = JSON.parse(sessionStorage.getItem('sriae_estudiante_perfil') || 'null');
+  sessionStorage.removeItem('sriae_estudiante_perfil');
+  if (!stored?.matricula) return;
+
+  const existe = estudiantes.some((estudiante) => String(estudiante.matricula) === String(stored.matricula));
+  if (!existe) return;
+
+  await seleccionarEstudiante(stored.matricula);
 }
 
 async function seleccionarEstudiante(matricula) {
