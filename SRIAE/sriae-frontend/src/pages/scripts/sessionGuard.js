@@ -1,5 +1,6 @@
 import { apiGet, apiPut } from '../../services/apiClient.js';
 import { getRole, getUser, logout, requireAuth } from '../../services/session.js';
+import { showMessage } from '../../utils/dom.js';
 
 requireAuth();
 
@@ -103,8 +104,10 @@ function isAllowed(href) {
 function protectPage() {
   const page = currentPage();
   if (!isAllowed(page)) {
-    alert('Tu usuario no tiene acceso a esta seccion.');
-    window.location.href = 'index.html';
+    showMessage('Tu usuario no tiene acceso a esta seccion.', 'warning');
+    window.setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 900);
   }
 }
 

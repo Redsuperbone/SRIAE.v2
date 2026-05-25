@@ -1,5 +1,5 @@
 import { registerUser } from '../../services/auth.js';
-import { alertError } from '../../utils/dom.js';
+import { alertError, showMessage } from '../../utils/dom.js';
 
 const form = document.querySelector('form');
 const inputs = form ? form.querySelectorAll('input') : [];
@@ -33,8 +33,10 @@ form?.addEventListener('submit', async (event) => {
 
   try {
     await registerUser(payload);
-    alert('Cuenta creada correctamente. Ahora inicia sesion.');
-    window.location.href = 'login.html';
+    showMessage('Cuenta creada correctamente. Ahora inicia sesion.', 'success');
+    window.setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 900);
   } catch (error) {
     alertError(error);
   }

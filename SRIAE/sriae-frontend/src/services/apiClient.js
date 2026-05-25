@@ -1,5 +1,6 @@
 ﻿import { API_BASE_URL } from './config.js';
 import { clearSession, getToken } from './session.js';
+import { showMessage } from '../utils/dom.js';
 
 function buildHeaders(options = {}) {
   const headers = { ...(options.headers || {}) };
@@ -10,6 +11,12 @@ function buildHeaders(options = {}) {
   }
 
   return headers;
+}
+
+function silentError(message) {
+  const error = new Error(message);
+  error.silent = true;
+  return error;
 }
 
 export async function apiRequest(path, options = {}) {
@@ -27,23 +34,27 @@ export async function apiRequest(path, options = {}) {
     }
 
     clearSession();
-    alert('Tu sesion expiro. Inicia sesion nuevamente.');
-    window.location.href = 'login.html';
-    throw new Error(error?.message || error?.error || 'No autorizado');
+    showMessage('Tu sesion expiro. Inicia sesion nuevamente.', 'warning');
+    window.setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 900);
+    throw silentError(error?.message || error?.error || 'No autorizado');
   }
 
   if (response.status === 403) {
-    alert('Sin permisos');
-    throw new Error('Sin permisos');
+    showMessage('Sin permisos para realizar esta accion.', 'warning');
+    throw silentError('Sin permisos');
   }
 
   if (!response.ok) {
     const error = await response.json().catch(() => null);
     if (response.status === 404 && error?.message === 'Usuario no encontrado' && !path.startsWith('/auth/')) {
       clearSession();
-      alert('Tu usuario ya no existe en la base local. Inicia sesion nuevamente.');
-      window.location.href = 'login.html';
-      throw new Error('Usuario no encontrado');
+      showMessage('Tu usuario ya no existe en la base local. Inicia sesion nuevamente.', 'warning');
+      window.setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 900);
+      throw silentError('Usuario no encontrado');
     }
 
     throw new Error(error?.message || error?.error || 'Ocurrio un error en la solicitud');
