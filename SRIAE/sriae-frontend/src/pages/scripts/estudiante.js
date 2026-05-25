@@ -205,5 +205,14 @@ searchInput?.addEventListener('input', filtrarEstudiantes);
 selectGrado?.addEventListener('change', filtrarEstudiantes);
 selectGrupo?.addEventListener('change', filtrarEstudiantes);
 selectAlumno?.addEventListener('change', () => seleccionarEstudiante(selectAlumno.value).catch(alertError));
+document.getElementById('editStudentFromProfile')?.addEventListener('click', () => {
+  if (!estudianteActual?.matricula) {
+    alertError(new Error('Selecciona un estudiante para actualizar su informacion.'));
+    return;
+  }
+
+  localStorage.setItem('sriae_estudiante_actual', JSON.stringify(estudianteActual));
+  window.location.href = `gestion-estudiantes.html?matricula=${encodeURIComponent(estudianteActual.matricula)}&editar=1`;
+});
 
 cargarEstudiantes().catch(alertError);

@@ -45,6 +45,22 @@ function fillForm(student) {
   setValue('linkMatricula', student.matricula);
 }
 
+function selectedStudentFromNavigation() {
+  const params = new URLSearchParams(window.location.search);
+  const matricula = params.get('matricula');
+  if (!matricula) return null;
+  return students.find((student) => String(student.matricula) === String(matricula));
+}
+
+function loadSelectedStudentForEdit() {
+  if (!canManage()) return;
+  const selected = selectedStudentFromNavigation();
+  if (!selected) return;
+
+  fillForm(selected);
+  form?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function clearForm() {
   form?.reset();
   setValue('studentMatricula', '');
@@ -109,6 +125,7 @@ async function loadStudents() {
   students = await apiGet(`/estudiantes${query ? `?${query}` : ''}`);
   render();
   renderAssociationSelects();
+  loadSelectedStudentForEdit();
 }
 
 async function loadAssociationUsers() {

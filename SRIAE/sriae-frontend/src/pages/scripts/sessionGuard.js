@@ -12,7 +12,6 @@ const ROLE_ACCESS = {
     'index.html',
     'estudiante.html',
     'gestion-estudiantes.html',
-    'actualizar-estudiante.html',
     'gestionar-tutor.html',
     'incidente.html',
     'protocolos.html',
