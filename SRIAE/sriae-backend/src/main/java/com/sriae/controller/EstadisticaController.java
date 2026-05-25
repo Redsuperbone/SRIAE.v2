@@ -1,6 +1,7 @@
 package com.sriae.controller;
 
 import com.sriae.dto.EstadisticasIncidenciasResponse;
+import com.sriae.dto.EstadisticasInicioResponse;
 import com.sriae.service.EstadisticaService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -24,5 +25,11 @@ public class EstadisticaController {
     @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE')")
     public EstadisticasIncidenciasResponse incidencias(Authentication authentication) {
         return estadisticaService.obtenerEstadisticasIncidencias(authentication.getName());
+    }
+
+    @GetMapping("/inicio")
+    @PreAuthorize("hasAnyRole('ADMIN','DIRECTOR','DOCENTE','ENFERMERA','TUTOR')")
+    public EstadisticasInicioResponse inicio() {
+        return estadisticaService.obtenerEstadisticasInicioGlobales();
     }
 }

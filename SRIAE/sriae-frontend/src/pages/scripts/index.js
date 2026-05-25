@@ -2,7 +2,6 @@ import { apiGet } from '../../services/apiClient.js';
 import { getRole } from '../../services/session.js';
 
 const INCIDENT_ACCESS_ROLES = new Set(['ADMIN', 'DIRECTOR', 'DOCENTE', 'ENFERMERA', 'TUTOR']);
-const RESOLVED_STATES = new Set(['CERRADA', 'CERRADO', 'RESUELTA', 'RESUELTO', 'FINALIZADA', 'FINALIZADO']);
 
 function setText(id, value) {
   const element = document.getElementById(id);
@@ -12,23 +11,6 @@ function setText(id, value) {
 function setTrend(id, text) {
   const element = document.getElementById(id);
   if (element) element.innerHTML = `<i class="fas fa-chart-line"></i> ${text}`;
-}
-
-function normalizeState(value) {
-  return (value || '').trim().toUpperCase();
-}
-
-function isResolved(incidente) {
-  return RESOLVED_STATES.has(normalizeState(incidente.estado));
-}
-
-function isSameDay(value, target) {
-  if (!value) return false;
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return false;
-  return date.getFullYear() === target.getFullYear()
-    && date.getMonth() === target.getMonth()
-    && date.getDate() === target.getDate();
 }
 
 function formatDelta(today, yesterday) {
@@ -46,15 +28,11 @@ function renderUnavailable() {
   setTrend('statsResolvedTrend', 'Sin datos para este rol');
 }
 
-function renderStats(incidentes) {
-  const today = new Date();
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-
-  const todayCount = incidentes.filter((incidente) => isSameDay(incidente.fechaIncidente, today)).length;
-  const yesterdayCount = incidentes.filter((incidente) => isSameDay(incidente.fechaIncidente, yesterday)).length;
-  const activeCount = incidentes.filter((incidente) => !isResolved(incidente)).length;
-  const resolvedCount = incidentes.filter(isResolved).length;
+function renderStats(stats) {
+  const todayCount = Number(stats?.incidentesHoy || 0);
+  const yesterdayCount = Number(stats?.incidentesAyer || 0);
+  const activeCount = Number(stats?.activos || 0);
+  const resolvedCount = Number(stats?.resueltos || 0);
 
   setText('statsToday', todayCount);
   setText('statsActive', activeCount);
@@ -71,8 +49,8 @@ async function cargarEstadisticasInicio() {
   }
 
   try {
-    const incidentes = await apiGet('/incidentes');
-    renderStats(Array.isArray(incidentes) ? incidentes : []);
+    const stats = await apiGet('/estadisticas/inicio');
+    renderStats(stats || {});
   } catch (error) {
     setTrend('statsTodayTrend', 'No se pudieron cargar datos');
     setTrend('statsActiveTrend', 'No se pudieron cargar datos');
