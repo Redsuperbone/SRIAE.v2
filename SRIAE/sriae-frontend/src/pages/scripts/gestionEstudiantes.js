@@ -138,16 +138,17 @@ async function loadStudents() {
 
 function updateTutorModeFields() {
   const mode = value('initialTutorMode') || 'existing';
+  const editing = isEditingStudent();
   document.querySelectorAll('[data-initial-tutor-existing]').forEach((element) => {
-    element.hidden = mode !== 'existing';
+    element.style.display = !editing && mode === 'existing' ? '' : 'none';
   });
   document.querySelectorAll('[data-initial-tutor-new]').forEach((element) => {
-    element.hidden = mode !== 'new';
+    element.style.display = !editing && mode === 'new' ? '' : 'none';
   });
 }
 
 function updateCreateOnlyFields() {
-  document.querySelectorAll('[data-create-only], [data-initial-tutor-existing], [data-initial-tutor-new]').forEach((element) => {
+  document.querySelectorAll('[data-create-only]').forEach((element) => {
     element.style.display = isEditingStudent() ? 'none' : '';
   });
   updateTutorModeFields();
