@@ -77,6 +77,7 @@ function filtrarEstudiantes() {
 
 function llenarAlumnos(data) {
   if (!selectAlumno) return;
+  const seleccionActual = selectAlumno.value;
 
   selectAlumno.innerHTML = '<option value="">Selecciona estudiante</option>' + data.map((estudiante) => (
     `<option value="${estudiante.matricula}">${nombreCompleto(estudiante)} - ${estudiante.matricula}</option>`
@@ -87,7 +88,13 @@ function llenarAlumnos(data) {
     return;
   }
 
-  seleccionarEstudiante(data[0].matricula);
+  const mantieneSeleccion = data.some((estudiante) => String(estudiante.matricula) === String(seleccionActual));
+  if (mantieneSeleccion) {
+    selectAlumno.value = String(seleccionActual);
+    return;
+  }
+
+  limpiarPerfil('Selecciona un estudiante para consultar su informacion.');
 }
 
 async function cargarEstudiantes() {
