@@ -53,11 +53,11 @@
     </div>
     <div class="admin-actions">
       <a class="btn-admin btn-secondary-admin" href="estudiante.html"><i class="fas fa-id-card"></i> Ver perfil</a>
-      <a class="btn-admin btn-secondary-admin" href="historial-medico.html"><i class="fas fa-notes-medical"></i> Historial medico</a>
+      <a class="btn-admin btn-secondary-admin" href="historial-medico.html" data-medical-only><i class="fas fa-notes-medical"></i> Historial medico</a>
     </div>
   </header>
   <section class="admin-grid">
-    <form class="admin-card" id="studentForm">
+    <form class="admin-card" id="studentForm" data-admin-only>
       <h2>Datos del estudiante</h2>
       <p class="hint">Deja la matricula vacia para crear un estudiante nuevo.</p>
       <input type="hidden" id="studentMatricula">

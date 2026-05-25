@@ -13,6 +13,12 @@ function value(id) { return document.getElementById(id)?.value.trim(); }
 function setValue(id, val) { const el = document.getElementById(id); if (el) el.value = val ?? ''; }
 function canManage() { return role === 'ADMIN'; }
 
+function applyPermissionVisibility() {
+  document.querySelectorAll('[data-admin-only]').forEach((element) => {
+    element.style.display = canManage() ? '' : 'none';
+  });
+}
+
 function payload() {
   return {
     nombre: value('nombre'),
@@ -131,7 +137,7 @@ tbody?.addEventListener('click', async (event) => {
   const edit = event.target.closest('[data-edit]')?.dataset.edit;
   const del = event.target.closest('[data-delete]')?.dataset.delete;
   const profile = event.target.closest('[data-profile]')?.dataset.profile;
-  if (edit) {
+  if (edit && canManage()) {
     const student = students.find((item) => String(item.matricula) === String(edit));
     if (student) fillForm(student);
   }
@@ -140,7 +146,7 @@ tbody?.addEventListener('click', async (event) => {
     if (student) localStorage.setItem('sriae_estudiante_actual', JSON.stringify(student));
     window.location.href = 'estudiante.html';
   }
-  if (del && confirm('¿Eliminar este estudiante?')) {
+  if (del && canManage() && confirm('¿Eliminar este estudiante?')) {
     await apiDelete(`/estudiantes/${del}`);
     await loadStudents();
   }
@@ -194,4 +200,5 @@ document.getElementById('viewDocentesBtn')?.addEventListener('click', async () =
   await showDocentes(matricula);
 });
 
+applyPermissionVisibility();
 Promise.all([loadStudents(), loadAssociationUsers()]).catch(alertError);
