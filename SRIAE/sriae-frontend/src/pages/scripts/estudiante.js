@@ -1,7 +1,7 @@
 import { apiGet } from '../../services/apiClient.js';
 import { alertError, formatDateTime } from '../../utils/dom.js';
 import { getRole } from '../../services/session.js';
-import { renderProtectedImages } from '../../services/media.js';
+import { loadProtectedImage, renderProtectedImages } from '../../services/media.js';
 
 let estudiantes = [];
 let estudiantesFiltrados = [];
@@ -168,6 +168,32 @@ function pintarPerfil(estudiante) {
       </div>
     `).join('') : '<p><strong>Tutor:</strong> Sin tutor vinculado</p>';
   }
+
+  renderStudentPhoto(estudiante.fotoRuta).catch(() => {});
+}
+
+async function renderStudentPhoto(fotoRuta) {
+  const photoBox = document.querySelector('.photo-box');
+  if (!photoBox) return;
+
+  const placeholder = photoBox.querySelector('.placeholder-img');
+  let image = photoBox.querySelector('.student-photo-img');
+  if (!image) {
+    image = document.createElement('img');
+    image.className = 'student-photo-img';
+    image.alt = 'Foto del estudiante';
+    photoBox.prepend(image);
+  }
+
+  const url = await loadProtectedImage(fotoRuta);
+  if (url) {
+    image.src = url;
+    image.hidden = false;
+    if (placeholder) placeholder.style.display = 'none';
+  } else {
+    image.hidden = true;
+    if (placeholder) placeholder.style.display = '';
+  }
 }
 
 function limpiarPerfil(mensaje) {
@@ -182,6 +208,7 @@ function limpiarPerfil(mensaje) {
   if (textData) textData.innerHTML = `<p>${mensaje}</p>`;
   if (tutorGrid) tutorGrid.innerHTML = '<p>Sin tutor para mostrar.</p>';
   if (timeline) timeline.innerHTML = '<p>Sin incidentes para mostrar.</p>';
+  renderStudentPhoto(null).catch(() => {});
 }
 
 async function cargarIncidentes(matricula) {

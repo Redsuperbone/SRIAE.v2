@@ -14,7 +14,9 @@ import com.sriae.repository.UsuarioRepository;
 import com.sriae.util.RoleUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,16 +28,19 @@ public class EstudianteService {
     private final UsuarioRepository usuarioRepository;
     private final TutorRepository tutorRepository;
     private final AuditoriaService auditoriaService;
+    private final UploadFileService uploadFileService;
 
     public EstudianteService(
             EstudianteRepository estudianteRepository,
             UsuarioRepository usuarioRepository,
             TutorRepository tutorRepository,
-            AuditoriaService auditoriaService) {
+            AuditoriaService auditoriaService,
+            UploadFileService uploadFileService) {
         this.estudianteRepository = estudianteRepository;
         this.usuarioRepository = usuarioRepository;
         this.tutorRepository = tutorRepository;
         this.auditoriaService = auditoriaService;
+        this.uploadFileService = uploadFileService;
     }
 
     public List<EstudianteResponse> buscar(String correoUsuario, String nombre, Integer matricula, String grupo) {
@@ -91,8 +96,29 @@ public class EstudianteService {
     }
 
     @Transactional
+    public EstudianteResponse actualizarFoto(Integer matricula, MultipartFile foto, String usuarioAccion) throws IOException {
+        if (foto == null || foto.isEmpty()) {
+            throw new BadRequestException("Selecciona una foto del estudiante");
+        }
+        if (foto.getContentType() == null || !foto.getContentType().startsWith("image/")) {
+            throw new BadRequestException("La foto del estudiante debe ser una imagen");
+        }
+
+        Estudiante estudiante = obtenerEstudiante(matricula);
+        if (estudiante.getFotoRuta() != null && !estudiante.getFotoRuta().isBlank()) {
+            uploadFileService.eliminar(estudiante.getFotoRuta());
+        }
+
+        estudiante.setFotoRuta(uploadFileService.copiar(foto));
+        Estudiante guardado = estudianteRepository.save(estudiante);
+        auditoriaService.registrar(usuarioAccion, "ACTUALIZO_FOTO_ESTUDIANTE", "Matricula: " + matricula);
+        return EstudianteResponse.fromEntity(guardado);
+    }
+
+    @Transactional
     public void eliminar(Integer matricula, String usuarioAccion) {
         Estudiante estudiante = obtenerEstudiante(matricula);
+        uploadFileService.eliminar(estudiante.getFotoRuta());
         estudianteRepository.delete(estudiante);
         auditoriaService.registrar(usuarioAccion, "ELIMINO_ESTUDIANTE", "Matricula: " + matricula);
     }

@@ -16,6 +16,7 @@ public class EstudianteResponse {
     private String condicionesCronicas;
     private LocalDate fechaNacimiento;
     private String medicamentosActuales;
+    private String fotoRuta;
     private List<UsuarioResponse> tutores;
     private List<UsuarioResponse> docentes;
 
@@ -30,6 +31,7 @@ public class EstudianteResponse {
         response.condicionesCronicas = estudiante.getCondicionesCronicas();
         response.fechaNacimiento = estudiante.getFechaNacimiento();
         response.medicamentosActuales = estudiante.getMedicamentosActuales();
+        response.fotoRuta = estudiante.getFotoRuta();
         response.tutores = estudiante.getTutores() == null
                 ? List.of()
                 : estudiante.getTutores().stream().map(UsuarioResponse::fromEntity).toList();
@@ -48,6 +50,7 @@ public class EstudianteResponse {
     public String getCondicionesCronicas() { return condicionesCronicas; }
     public LocalDate getFechaNacimiento() { return fechaNacimiento; }
     public String getMedicamentosActuales() { return medicamentosActuales; }
+    public String getFotoRuta() { return fotoRuta; }
     public List<UsuarioResponse> getTutores() { return tutores; }
     public List<UsuarioResponse> getDocentes() { return docentes; }
 }

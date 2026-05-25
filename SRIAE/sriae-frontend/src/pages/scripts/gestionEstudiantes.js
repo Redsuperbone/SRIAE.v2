@@ -1,4 +1,4 @@
-﻿import { apiDelete, apiGet, apiPost, apiPut } from '../../services/apiClient.js';
+import { apiDelete, apiGet, apiPost, apiPut, apiRequest } from '../../services/apiClient.js';
 import { alertError } from '../../utils/dom.js';
 import { getRole } from '../../services/session.js';
 
@@ -13,6 +13,7 @@ function value(id) { return document.getElementById(id)?.value.trim(); }
 function setValue(id, val) { const el = document.getElementById(id); if (el) el.value = val ?? ''; }
 function canManage() { return role === 'ADMIN'; }
 function isEditingStudent() { return Boolean(value('studentMatricula')); }
+function selectedPhoto() { return document.getElementById('studentPhoto')?.files?.[0] || null; }
 
 function applyPermissionVisibility() {
   document.querySelectorAll('[data-admin-only]').forEach((element) => {
@@ -67,6 +68,18 @@ function clearForm() {
   form?.reset();
   setValue('studentMatricula', '');
   updateCreateOnlyFields();
+}
+
+async function uploadStudentPhoto(matricula) {
+  const file = selectedPhoto();
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append('foto', file);
+  await apiRequest(`/estudiantes/${matricula}/foto`, {
+    method: 'POST',
+    body: formData
+  });
 }
 
 function optionUsuario(usuario) {
@@ -200,10 +213,12 @@ form?.addEventListener('submit', async (event) => {
   try {
     if (matricula) {
       await apiPut(`/estudiantes/${matricula}`, payload());
+      await uploadStudentPhoto(matricula);
     } else {
       const tutorId = await resolveInitialTutorId();
       const created = await apiPost('/estudiantes', payload());
       await apiPost(`/estudiantes/${created.matricula}/tutores/${tutorId}`, {});
+      await uploadStudentPhoto(created.matricula);
     }
     clearForm();
     await loadStudents();

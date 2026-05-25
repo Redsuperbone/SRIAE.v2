@@ -51,6 +51,9 @@ public class UploadController {
         if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) {
             return MediaType.IMAGE_JPEG;
         }
+        if (lower.endsWith(".webp")) {
+            return MediaType.parseMediaType("image/webp");
+        }
         return MediaType.APPLICATION_OCTET_STREAM;
     }
 }

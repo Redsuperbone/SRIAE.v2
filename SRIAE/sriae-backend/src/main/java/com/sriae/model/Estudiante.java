@@ -48,6 +48,9 @@ public class Estudiante {
     @Column(name = "medicamentos_actuales", columnDefinition = "TEXT")
     private String medicamentosActuales;
 
+    @Column(name = "foto_ruta")
+    private String fotoRuta;
+
     @ManyToMany
     @JoinTable(
             name = "tutor_estudiante",
