@@ -12,6 +12,7 @@ const form = document.getElementById('studentForm');
 function value(id) { return document.getElementById(id)?.value.trim(); }
 function setValue(id, val) { const el = document.getElementById(id); if (el) el.value = val ?? ''; }
 function canManage() { return role === 'ADMIN'; }
+function isEditingStudent() { return Boolean(value('studentMatricula')); }
 
 function applyPermissionVisibility() {
   document.querySelectorAll('[data-admin-only]').forEach((element) => {
@@ -43,6 +44,7 @@ function fillForm(student) {
   setValue('condicionesCronicas', student.condicionesCronicas);
   setValue('medicamentosActuales', student.medicamentosActuales);
   setValue('linkMatricula', student.matricula);
+  updateCreateOnlyFields();
 }
 
 function selectedStudentFromNavigation() {
@@ -64,6 +66,7 @@ function loadSelectedStudentForEdit() {
 function clearForm() {
   form?.reset();
   setValue('studentMatricula', '');
+  updateCreateOnlyFields();
 }
 
 function optionUsuario(usuario) {
@@ -78,6 +81,7 @@ function optionEstudiante(student) {
 function renderAssociationSelects() {
   const studentSelect = document.getElementById('linkMatricula');
   const tutorSelect = document.getElementById('linkTutor');
+  const initialTutorSelect = document.getElementById('initialTutorExisting');
   const docenteSelect = document.getElementById('linkDocente');
 
   if (studentSelect) {
@@ -88,6 +92,10 @@ function renderAssociationSelects() {
 
   if (tutorSelect) {
     tutorSelect.innerHTML = '<option value="">Selecciona tutor</option>' + tutors.map(optionUsuario).join('');
+  }
+
+  if (initialTutorSelect) {
+    initialTutorSelect.innerHTML = '<option value="">Selecciona tutor</option>' + tutors.map(optionUsuario).join('');
   }
 
   if (docenteSelect) {
@@ -128,6 +136,53 @@ async function loadStudents() {
   loadSelectedStudentForEdit();
 }
 
+function updateTutorModeFields() {
+  const mode = value('initialTutorMode') || 'existing';
+  document.querySelectorAll('[data-initial-tutor-existing]').forEach((element) => {
+    element.hidden = mode !== 'existing';
+  });
+  document.querySelectorAll('[data-initial-tutor-new]').forEach((element) => {
+    element.hidden = mode !== 'new';
+  });
+}
+
+function updateCreateOnlyFields() {
+  document.querySelectorAll('[data-create-only], [data-initial-tutor-existing], [data-initial-tutor-new]').forEach((element) => {
+    element.style.display = isEditingStudent() ? 'none' : '';
+  });
+  updateTutorModeFields();
+}
+
+async function resolveInitialTutorId() {
+  if (isEditingStudent()) return null;
+
+  const mode = value('initialTutorMode') || 'existing';
+  if (mode === 'existing') {
+    const tutorId = value('initialTutorExisting');
+    if (!tutorId) throw new Error('Selecciona un tutor para el estudiante.');
+    return tutorId;
+  }
+
+  const nombreCompleto = value('newTutorName');
+  const correoElectronico = value('newTutorEmail');
+  const contrasena = value('newTutorPassword');
+  if (!nombreCompleto || !correoElectronico || !contrasena) {
+    throw new Error('Completa nombre, correo y contrasena temporal del tutor.');
+  }
+
+  const tutor = await apiPost('/usuarios', {
+    nombreCompleto,
+    apellidoCompleto: value('newTutorLastName'),
+    correoElectronico,
+    telefono: value('newTutorPhone'),
+    contrasena,
+    tipoUsuario: 'TUTOR'
+  });
+  tutors = await apiGet('/usuarios?rol=TUTOR');
+  renderAssociationSelects();
+  return tutor.idUsuario;
+}
+
 async function loadAssociationUsers() {
   if (!canManage()) return;
   [tutors, docentes] = await Promise.all([
@@ -141,14 +196,24 @@ form?.addEventListener('submit', async (event) => {
   event.preventDefault();
   if (!canManage()) return alert('Solo ADMIN puede crear o actualizar estudiantes.');
   const matricula = value('studentMatricula');
-  if (matricula) await apiPut(`/estudiantes/${matricula}`, payload());
-  else await apiPost('/estudiantes', payload());
-  clearForm();
-  await loadStudents();
+  try {
+    if (matricula) {
+      await apiPut(`/estudiantes/${matricula}`, payload());
+    } else {
+      const tutorId = await resolveInitialTutorId();
+      const created = await apiPost('/estudiantes', payload());
+      await apiPost(`/estudiantes/${created.matricula}/tutores/${tutorId}`, {});
+    }
+    clearForm();
+    await loadStudents();
+  } catch (error) {
+    alertError(error);
+  }
 });
 
 document.getElementById('clearStudent')?.addEventListener('click', clearForm);
 document.getElementById('searchStudents')?.addEventListener('click', () => loadStudents().catch(alertError));
+document.getElementById('initialTutorMode')?.addEventListener('change', updateTutorModeFields);
 
 tbody?.addEventListener('click', async (event) => {
   const edit = event.target.closest('[data-edit]')?.dataset.edit;
